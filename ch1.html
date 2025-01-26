@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>1&nbsp; Large Language Models – Exploring Large Language Models With R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./ch2.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch1.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Large Language Models</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Exploring Large Language Models With R</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch1.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Large Language Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Local Large Language Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Text Generation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Vision</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Embedding Generation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Text Classification</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Retrieval Augmented Generation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Fine-tuning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Miscellaneous Techniques</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">The Final Deep-dive</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bibliography</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1.1</span> Introduction</a></li>
+  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background"><span class="header-section-number">1.2</span> Background</a></li>
+  <li>
+<a href="#brief-history" id="toc-brief-history" class="nav-link" data-scroll-target="#brief-history"><span class="header-section-number">1.3</span> Brief History</a>
+  <ul class="collapse">
+<li><a href="#early-beginnings-the-1980s-1990s" id="toc-early-beginnings-the-1980s-1990s" class="nav-link" data-scroll-target="#early-beginnings-the-1980s-1990s"><span class="header-section-number">1.3.1</span> Early Beginnings: The 1980s-1990s</a></li>
+  <li><a href="#the-advent-of-lstm-and-deep-learning-early-2000s-2010s" id="toc-the-advent-of-lstm-and-deep-learning-early-2000s-2010s" class="nav-link" data-scroll-target="#the-advent-of-lstm-and-deep-learning-early-2000s-2010s"><span class="header-section-number">1.3.2</span> The Advent of LSTM and Deep Learning: Early 2000s-2010s</a></li>
+  <li><a href="#transformer-architecture-and-pre-training-late-2010s" id="toc-transformer-architecture-and-pre-training-late-2010s" class="nav-link" data-scroll-target="#transformer-architecture-and-pre-training-late-2010s"><span class="header-section-number">1.3.3</span> Transformer Architecture and Pre-training: Late 2010s</a></li>
+  <li><a href="#scaling-up-the-era-of-large-language-models" id="toc-scaling-up-the-era-of-large-language-models" class="nav-link" data-scroll-target="#scaling-up-the-era-of-large-language-models"><span class="header-section-number">1.3.4</span> Scaling Up: The Era of Large Language Models</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#the-transformer-model" id="toc-the-transformer-model" class="nav-link" data-scroll-target="#the-transformer-model"><span class="header-section-number">1.4</span> The Transformer Model</a>
+  <ul class="collapse">
+<li><a href="#key-components-of-the-transformer-model" id="toc-key-components-of-the-transformer-model" class="nav-link" data-scroll-target="#key-components-of-the-transformer-model"><span class="header-section-number">1.4.1</span> Key Components of the Transformer Model</a></li>
+  <li><a href="#advantages-of-transformers" id="toc-advantages-of-transformers" class="nav-link" data-scroll-target="#advantages-of-transformers"><span class="header-section-number">1.4.2</span> Advantages of Transformers</a></li>
+  <li><a href="#impact-on-large-language-models" id="toc-impact-on-large-language-models" class="nav-link" data-scroll-target="#impact-on-large-language-models"><span class="header-section-number">1.4.3</span> Impact on Large Language Models</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#recent-applications-of-large-language-models" id="toc-recent-applications-of-large-language-models" class="nav-link" data-scroll-target="#recent-applications-of-large-language-models"><span class="header-section-number">1.5</span> Recent Applications of Large Language Models</a>
+  <ul class="collapse">
+<li><a href="#general-applications" id="toc-general-applications" class="nav-link" data-scroll-target="#general-applications"><span class="header-section-number">1.5.1</span> General Applications</a></li>
+  <li><a href="#academic-applications" id="toc-academic-applications" class="nav-link" data-scroll-target="#academic-applications"><span class="header-section-number">1.5.2</span> Academic Applications</a></li>
+  <li><a href="#medical-applications" id="toc-medical-applications" class="nav-link" data-scroll-target="#medical-applications"><span class="header-section-number">1.5.3</span> Medical Applications</a></li>
+  </ul>
+</li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Large Language Models</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><section id="introduction" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="introduction">
+<span class="header-section-number">1.1</span> Introduction</h2>
+<p>Large language models (LLMs) are “foundation models trained on immense amounts of data making them capable of understanding and generating natural language and other types of content to perform a wide range of tasks” <span class="citation" data-cites="IBM2024_LLM">(<a href="#ref-IBM2024_LLM" role="doc-biblioref">IBM, 2024</a>)</span>.</p>
+<p>There are also small <span class="citation" data-cites="IBM2024_SLM">(<a href="#ref-IBM2024_SLM" role="doc-biblioref">Caballar, 2024</a>)</span>, tiny <span class="citation" data-cites="tang2024rethinkingoptimizationarchitecturetiny">(<a href="#ref-tang2024rethinkingoptimizationarchitecturetiny" role="doc-biblioref">Tang et al., 2024</a>)</span>, and super tiny <span class="citation" data-cites="hillier2024supertinylanguagemodels">(<a href="#ref-hillier2024supertinylanguagemodels" role="doc-biblioref">Hillier et al., 2024</a>)</span> language models. In this book, I refer to all language models that rely on the modern concept of Transformer-based model architecture as LLMs. When a nomenclature is based on numerical cutoff values in a rapidly expanding field of technology, sooner or later, what we know today as <em>large</em> will soon become <em>hyper tiny</em>. So, let’s simply call them LLMs.</p>
+<p>This chapter’s content was primarily generated using local LLMs. I would appreciate any corrections regarding the information presented.</p>
+</section><section id="background" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="background">
+<span class="header-section-number">1.2</span> Background</h2>
+<p>[Qwen2.5:14b] [Phi4:14b]</p>
+<p>The rise of Large Language Models represents a significant leap forward in artificial intelligence and language understanding. These advanced computer systems are designed to understand and generate human-like text proficiently. Characterised by their extensive size—referring not only to the volume of data they can process but also to the complexity and depth of their neural network architecture—the “large” in LLM signifies that these models consist of billions or even trillions of parameters, enabling them to capture nuanced patterns within vast datasets.</p>
+<p>The development of LLMs is rooted in advancements in machine learning, particularly deep learning techniques. These techniques involve training artificial neural networks on massive amounts of text data, allowing the models to learn statistical relationships between words, phrases, sentences, and entire documents. This enables them to perform a variety of language tasks such as translation, summarization, question answering, and content generation.</p>
+<p>A key feature of LLMs is their ability to generalise from training data to new, unseen inputs. For example, after being trained on diverse text sources, an LLM can generate coherent and contextually appropriate responses in conversations or provide insightful answers to questions it was not explicitly programmed to handle. This generative capability makes them particularly useful for applications like chatbots, virtual assistants, and creative writing aids.</p>
+<p>The architecture of LLMs often relies on transformer models, which are designed to process sequences of data efficiently. Transformers utilise mechanisms such as attention layers that allow the model to focus on different parts of an input sequence dynamically, improving its ability to understand context and meaning in complex sentences. This design is crucial for handling tasks requiring long-term dependency understanding, a common challenge in natural language processing.</p>
+<p>As LLMs continue to evolve, they are becoming increasingly powerful tools across various industries. In healthcare, they assist with medical documentation by summarising patient notes or providing information retrieval. In education, they help generate practice exercises and personalised learning materials. Furthermore, their ability to process and synthesise large volumes of text has significant implications for content creation and curation in media.</p>
+<p>Despite these capabilities, LLMs also pose challenges and ethical considerations. Concerns about data privacy, potential biases embedded in the training data, and the environmental impact of their extensive computational requirements are ongoing discussions within the AI community. Additionally, ensuring that these models align with human values and operate safely in diverse contexts remains a critical area for research.</p>
+</section><section id="brief-history" class="level2" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="brief-history">
+<span class="header-section-number">1.3</span> Brief History</h2>
+<p>[Qwen2.5:14b] [DeepSeek-R1:14b]</p>
+<p>The development of Large Language Models has been driven by significant advances in artificial intelligence and deep learning over the past four decades. The journey began with simpler models that focused on understanding basic language patterns, but it quickly evolved into sophisticated systems capable of handling complex linguistic tasks.</p>
+<section id="early-beginnings-the-1980s-1990s" class="level3" data-number="1.3.1"><h3 data-number="1.3.1" class="anchored" data-anchor-id="early-beginnings-the-1980s-1990s">
+<span class="header-section-number">1.3.1</span> Early Beginnings: The 1980s-1990s</h3>
+<ul>
+<li>
+<strong>Neural Networks Emerge</strong>: The exploration of neural networks for natural language processing (NLP) began in the mid-to-late 1980s. These early models laid the groundwork for connectionist approaches, moving away from rule-based systems.</li>
+<li>
+<strong>Recurrent Neural Networks (RNNs)</strong>: By the late 1980s and early 1990s, RNNs started being applied to language modeling, marking a significant shift in NLP techniques.</li>
+</ul></section><section id="the-advent-of-lstm-and-deep-learning-early-2000s-2010s" class="level3" data-number="1.3.2"><h3 data-number="1.3.2" class="anchored" data-anchor-id="the-advent-of-lstm-and-deep-learning-early-2000s-2010s">
+<span class="header-section-number">1.3.2</span> The Advent of LSTM and Deep Learning: Early 2000s-2010s</h3>
+<ul>
+<li>
+<strong>LSTM Networks</strong>: In the mid-2000s, Long Short-Term Memory (LSTM) networks were introduced by Hochreiter and Schmidhuber in 1997. These networks improved RNN performance by effectively capturing long-range dependencies.</li>
+<li>
+<strong>Breakthrough with Deep Learning</strong>: The early 2010s saw advancements with models like those developed at Facebook AI Research (FAIR), enhancing the capabilities of neural networks through deep learning techniques.</li>
+</ul></section><section id="transformer-architecture-and-pre-training-late-2010s" class="level3" data-number="1.3.3"><h3 data-number="1.3.3" class="anchored" data-anchor-id="transformer-architecture-and-pre-training-late-2010s">
+<span class="header-section-number">1.3.3</span> Transformer Architecture and Pre-training: Late 2010s</h3>
+<ul>
+<li>
+<strong>Transformer Introduction</strong>: The Transformer architecture, introduced in a 2017 paper by <span class="citation" data-cites="vaswani2017">Vaswani et al. (<a href="#ref-vaswani2017" role="doc-biblioref">2017</a>)</span>, revolutionized NLP with its self-attention mechanism. Since then, Transformers became widely adopted, leading to significant advancements in language modeling.</li>
+<li>
+<strong>Pre-trained Models</strong>: In 2017, BERT (Bidirectional Encoder Representations from Transformers) and GPT (Generative Pre-trained Transformer) emerged, utilizing unsupervised learning methods to achieve state-of-the-art performance.</li>
+</ul></section><section id="scaling-up-the-era-of-large-language-models" class="level3" data-number="1.3.4"><h3 data-number="1.3.4" class="anchored" data-anchor-id="scaling-up-the-era-of-large-language-models">
+<span class="header-section-number">1.3.4</span> Scaling Up: The Era of Large Language Models</h3>
+<ul>
+<li>
+<strong>GPT-3 and Beyond</strong>: In 2020, OpenAI’s GPT-3, trained on massive datasets, demonstrated impressive capabilities, highlighting the potential of large-scale models.</li>
+<li>
+<strong>Recent Advancements</strong>: Current research focuses on improving efficiency, ethics, and applications, with ongoing developments in models like T5, PaLM, and others.</li>
+</ul>
+<p>In summary, the evolution of large language models began in the late 20th century with neural networks replacing rule-based NLP systems. Recurrent Neural Networks (RNNs) and LSTM networks emerged, enhancing language modeling. The Transformer architecture, introduced in 2016, revolutionized NLP through self-attention mechanisms. Pre-trained models like BERT and GPT advanced unsupervised learning, leading to the development of large-scale models such as GPT-3, marking a new era in AI-driven language processing.</p>
+</section></section><section id="the-transformer-model" class="level2" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="the-transformer-model">
+<span class="header-section-number">1.4</span> The Transformer Model</h2>
+<p>[Phi4:14b]</p>
+<p>The Transformer model, introduced by <span class="citation" data-cites="vaswani2017">Vaswani et al. (<a href="#ref-vaswani2017" role="doc-biblioref">2017</a>)</span> in their seminal 2017 paper “Attention is All You Need,” has become a cornerstone for advancements in natural language processing (NLP). It marked a significant departure from traditional sequence-based models like Recurrent Neural Networks (RNNs) and Long Short-Term Memory networks (LSTMs), which process data sequentially. Instead, Transformers leverage parallelization to handle entire sequences at once, making them more efficient and scalable.</p>
+<section id="key-components-of-the-transformer-model" class="level3" data-number="1.4.1"><h3 data-number="1.4.1" class="anchored" data-anchor-id="key-components-of-the-transformer-model">
+<span class="header-section-number">1.4.1</span> Key Components of the Transformer Model</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/transformer_model.png" class="img-fluid figure-img" style="width:66.0%"></p>
+<figcaption>The Transformer model architecture. Source: <span class="citation" data-cites="vaswani2017">Vaswani et al. (<a href="#ref-vaswani2017" role="doc-biblioref">2017</a>)</span>.</figcaption></figure>
+</div>
+<ol type="1">
+<li>
+<strong>Self-Attention Mechanism</strong>:
+<ul>
+<li>At the heart of the Transformer is the self-attention mechanism, which allows the model to weigh the importance of different words in a sentence relative to each other.</li>
+<li>This mechanism computes attention scores for every word pair in a sequence, enabling the model to capture dependencies regardless of their distance from each other.</li>
+</ul>
+</li>
+<li>
+<strong>Encoder and Decoder Architecture</strong>:
+<ul>
+<li>The Transformer architecture consists of an encoder and a decoder, both composed of multiple layers.</li>
+<li>The encoder processes the input sequence and converts it into continuous representations that capture its meaning.</li>
+<li>The decoder then generates the output sequence by attending to these encoded representations and the partially generated output.</li>
+</ul>
+</li>
+<li>
+<strong>Positional Encoding</strong>:
+<ul>
+<li>Since Transformers do not inherently process sequences in order, they use positional encodings to inject information about the position of each word in a sentence.</li>
+<li>This allows the model to maintain an understanding of word order, which is crucial for meaningful language processing.</li>
+</ul>
+</li>
+<li>
+<strong>Layer Normalization and Feed-Forward Networks</strong>:
+<ul>
+<li>Each layer in both the encoder and decoder includes sub-layers such as multi-head self-attention and position-wise feed-forward networks, followed by normalization.</li>
+<li>These components ensure that the model can learn complex patterns while maintaining stability during training.</li>
+</ul>
+</li>
+</ol></section><section id="advantages-of-transformers" class="level3" data-number="1.4.2"><h3 data-number="1.4.2" class="anchored" data-anchor-id="advantages-of-transformers">
+<span class="header-section-number">1.4.2</span> Advantages of Transformers</h3>
+<ul>
+<li><p><strong>Parallelization</strong>: Unlike RNNs, which process sequences step-by-step, Transformers handle entire sequences simultaneously. This parallelism significantly speeds up training and inference times.</p></li>
+<li><p><strong>Scalability</strong>: The architecture’s ability to leverage large datasets and compute resources has enabled the development of models like GPT (Generative Pre-trained Transformer) and BERT (Bidirectional Encoder Representations from Transformers), which have set new benchmarks in various NLP tasks.</p></li>
+<li><p><strong>Flexibility</strong>: Transformers can be adapted for a wide range of applications beyond translation, including text summarization, sentiment analysis, and more.</p></li>
+</ul></section><section id="impact-on-large-language-models" class="level3" data-number="1.4.3"><h3 data-number="1.4.3" class="anchored" data-anchor-id="impact-on-large-language-models">
+<span class="header-section-number">1.4.3</span> Impact on Large Language Models</h3>
+<p>The introduction of the Transformer model has been pivotal in the evolution of LLMs. By enabling efficient training on massive datasets and facilitating transfer learning, Transformers have empowered models to achieve unprecedented levels of linguistic understanding and generative capability. This has led to applications ranging from conversational agents to sophisticated content generation tools.</p>
+<p>The Transformer model’s innovative architecture and attention mechanism have revolutionized NLP, laying the groundwork for the development of powerful large language models that continue to push the boundaries of what machines can understand and generate in human languages.</p>
+</section></section><section id="recent-applications-of-large-language-models" class="level2" data-number="1.5"><h2 data-number="1.5" class="anchored" data-anchor-id="recent-applications-of-large-language-models">
+<span class="header-section-number">1.5</span> Recent Applications of Large Language Models</h2>
+<p>[Qwen2.5:14b] [Phi4:14b]</p>
+<p>Large Language Models have seen significant advancements and are being applied across diverse domains, including healthcare. These models leverage their ability to understand and generate human-like text to solve complex problems efficiently.</p>
+<section id="general-applications" class="level3" data-number="1.5.1"><h3 data-number="1.5.1" class="anchored" data-anchor-id="general-applications">
+<span class="header-section-number">1.5.1</span> General Applications</h3>
+<p><strong>Automated Content Generation</strong>: LLMs are adept at transforming structured data into human-readable content, which is invaluable for businesses and organizations needing to produce large volumes of text efficiently. They can automatically generate reports by analyzing datasets and identifying key trends or insights. In journalism, they assist in producing news articles by summarizing events from structured inputs like press releases or databases. Similarly, LLMs can create executive summaries that highlight the most important points from detailed documents, saving time for professionals who need to digest large amounts of information quickly.</p>
+<p><strong>Chatbots and Virtual Assistants</strong>: LLMs serve as the backbone for advanced chatbots and virtual assistants, providing natural language understanding and generation capabilities. These models can handle a wide range of queries, offering customer support by answering frequently asked questions or resolving issues based on pre-defined knowledge bases. Moreover, they personalize interactions by learning user preferences over time, thus enhancing user satisfaction. In e-commerce, for example, LLM-powered chatbots can recommend products tailored to individual shopping habits, while in healthcare, virtual assistants might provide initial triage assessments based on patient inputs.</p>
+<p><strong>Code Completion and Debugging</strong>: Software development benefits significantly from LLMs through code completion features that predict what a developer intends to write next, enhancing productivity by reducing manual coding effort. These models analyze existing codebases to suggest logical continuations or improvements, effectively serving as an intelligent pair programmer. Additionally, LLMs can assist in debugging by identifying potential errors and suggesting corrections based on patterns observed in similar code snippets. This capability helps developers quickly resolve issues and maintain cleaner, more efficient code.</p>
+<p><strong>Text Summarization and Translation</strong>: LLMs excel at condensing lengthy documents into concise summaries, capturing essential information without losing context or meaning. This functionality is crucial for professionals who need to review extensive reports or research papers efficiently. In translation tasks, LLMs leverage their understanding of multiple languages to provide accurate translations while maintaining the original text’s tone and style. They can handle complex language nuances and idiomatic expressions better than traditional machine translation systems, facilitating effective cross-cultural communication in globalized environments.</p>
+</section><section id="academic-applications" class="level3" data-number="1.5.2"><h3 data-number="1.5.2" class="anchored" data-anchor-id="academic-applications">
+<span class="header-section-number">1.5.2</span> Academic Applications</h3>
+<p><strong>Research Assistance</strong>: LLMs significantly enhance research efficiency by performing tasks like summarizing lengthy academic papers into digestible abstracts, thereby saving researchers valuable time. They can also generate comprehensive literature reviews by synthesizing information from multiple sources, highlighting trends and gaps within a field of study. Furthermore, LLMs suggest relevant studies or articles that might not be immediately apparent through traditional search methods, ensuring thoroughness in research projects.</p>
+<p><strong>Data Analysis</strong>: In disciplines such as social sciences and bioinformatics, analyzing qualitative data can be challenging due to the sheer volume and complexity of text-based information. LLMs assist by identifying patterns, themes, or significant correlations within these large datasets, providing researchers with deeper insights that might be missed through manual analysis. This capability enhances both the depth and efficiency of research analyses, allowing for more robust conclusions.</p>
+<p><strong>Educational Tools</strong>: LLMs integrated into educational platforms revolutionize personalized learning experiences. They generate practice problems tailored to individual student needs and provide instant feedback on student work, which helps reinforce learning objectives. Additionally, LLMs can design adaptive learning paths that evolve based on a student’s progress, ensuring that each learner receives the appropriate level of challenge and support.</p>
+<p><strong>Grant Writing and Proposal Development</strong>: Academics often face challenges in crafting compelling grant proposals due to the competitive nature of funding opportunities. LLMs assist by providing structural templates, suggesting content improvements, or generating sections of the proposal text. This not only enhances productivity but also increases the quality and coherence of proposals, making them more likely to succeed.</p>
+<p><strong>Language Translation and Interpretation</strong>: LLMs with multilingual capabilities bridge language barriers in academic collaboration, enabling seamless translation of documents and interpretation of research findings across languages. This functionality is crucial for international collaborations, allowing researchers from diverse linguistic backgrounds to share insights without the constraints of language limitations.</p>
+<p><strong>Peer Review Processes</strong>: Institutions are exploring how LLMs can support peer review by offering initial assessments of manuscripts. These models evaluate aspects like clarity, coherence, and potential issues, helping reviewers focus on more critical content evaluations rather than basic structural concerns. This streamlines the review process while maintaining rigorous academic standards.</p>
+<p><strong>Simulated Dialogues for Training</strong>: LLMs are valuable tools in training students within psychology and education fields by simulating human dialogues. These simulations allow learners to practice conversational skills or therapeutic techniques in a safe, controlled environment, providing an opportunity to refine their abilities before real-world application.</p>
+</section><section id="medical-applications" class="level3" data-number="1.5.3"><h3 data-number="1.5.3" class="anchored" data-anchor-id="medical-applications">
+<span class="header-section-number">1.5.3</span> Medical Applications</h3>
+<p><strong>Clinical Documentation</strong>: LLMs significantly reduce the administrative burden on healthcare providers by automating clinical documentation tasks. AI-driven systems can generate detailed patient progress notes from voice recordings during consultations or directly from electronic health records (EHRs). This automation allows clinicians to focus more on patient care rather than paperwork, improving efficiency and accuracy in maintaining comprehensive medical records.</p>
+<p><strong>Disease Diagnosis and Prediction</strong>: LLMs enhance diagnostic processes by analyzing vast amounts of medical literature and patient data to identify disease patterns. These models can suggest potential diagnoses based on a combination of symptoms, patient history, and known medical correlations. Additionally, LLMs aid in predicting the progression of diseases, allowing healthcare providers to implement early interventions or personalized treatment plans that could improve patient outcomes.</p>
+<p><strong>Patient Education Materials</strong>: LLMs generate personalized educational materials for patients by tailoring content based on individual medical records and demographic information. This ensures that patients receive clear, understandable explanations about their conditions and available treatment options. Customized pamphlets or web pages can address specific concerns or questions, empowering patients to actively participate in their own healthcare management.</p>
+<p><strong>Pharmaceutical Research</strong>: In the realm of drug discovery and development, LLMs analyze extensive scientific literature to identify potential targets and compounds. By scanning databases of chemical structures and biological pathways, these models suggest promising drug candidates for further investigation. This capability accelerates the research process, potentially leading to faster development of new medications and therapies.</p>
+<p><strong>Mental Health Support</strong>: LLMs power virtual therapists that provide empathetic support for mental health issues. These conversational agents offer advice and resources based on user input, assisting with managing conditions such as anxiety or depression. By simulating human-like interactions, LLMs can offer immediate support and guidance, supplementing traditional therapy options and increasing accessibility to mental health care.</p>
+<p><strong>Medical Record Management</strong>: LLMs facilitate the organization and retrieval of medical records by enabling intelligent search capabilities across large datasets. Healthcare professionals can efficiently access relevant patient history, lab results, and previous treatments with these tools, improving continuity of care and ensuring that critical information is readily available when needed.</p>
+<p><strong>Research Literature Summarization</strong>: LLMs help clinicians and researchers stay informed about the latest advancements by summarizing recent research papers and studies. Automated summaries provide concise overviews of complex journal articles in fields such as oncology, cardiology, or neurology. This application saves time for healthcare professionals, allowing them to quickly assimilate new knowledge and integrate it into their practice.</p>
+</section></section><section id="references" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-IBM2024_SLM" class="csl-entry" role="listitem">
+Caballar, R. (2024). What are small language models? Website. Retrieved from <a href="https://www.ibm.com/think/topics/small-language-models">https://www.ibm.com/think/topics/small-language-models</a>
+</div>
+<div id="ref-hillier2024supertinylanguagemodels" class="csl-entry" role="listitem">
+Hillier, D., Guertler, L., Tan, C., Agrawal, P., Ruirui, C., &amp; Cheng, B. (2024). Super tiny language models. Retrieved from <a href="https://arxiv.org/abs/2405.14159">https://arxiv.org/abs/2405.14159</a>
+</div>
+<div id="ref-IBM2024_LLM" class="csl-entry" role="listitem">
+IBM. (2024). What are large language models (LLMs)? Website. Retrieved from <a href="https://www.ibm.com/think/topics/large-language-models">https://www.ibm.com/think/topics/large-language-models</a>
+</div>
+<div id="ref-tang2024rethinkingoptimizationarchitecturetiny" class="csl-entry" role="listitem">
+Tang, Y., Liu, F., Ni, Y., Tian, Y., Bai, Z., Hu, Y.-Q., … Wang, Y. (2024). Rethinking optimization and architecture for tiny language models. Retrieved from <a href="https://arxiv.org/abs/2402.02791">https://arxiv.org/abs/2402.02791</a>
+</div>
+<div id="ref-vaswani2017" class="csl-entry" role="listitem">
+Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., … Polosukhin, I. (2017). Attention is all you need. In I. Guyon, U. V. Luxburg, S. Bengio, H. Wallach, R. Fergus, S. Vishwanathan, &amp; R. Garnett (Eds.), <em>Advances in neural information processing systems</em> (Vol. 30). Curran Associates, Inc. Retrieved from <a href="https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf">https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf</a>
+</div>
+</div>
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/wnarifin\.github\.io\/explore_llm_r\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Preface">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./ch2.html" class="pagination-link" aria-label="Local Large Language Models">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Local Large Language Models</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
