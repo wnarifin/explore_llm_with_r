@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.5.57">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
 <title>9&nbsp; Miscellaneous Techniques – Exploring Large Language Models With R</title>
 <style>
 code{white-space: pre-wrap;}
@@ -20,8 +17,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
-
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
@@ -40,8 +70,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -67,17 +96,13 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-
-
+}</script><link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 </head>
-
 <body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -88,13 +113,9 @@ ul.task-list li input[type="checkbox"] {
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Exploring Large Language Models With R</a> 
     </div>
@@ -106,7 +127,7 @@ ul.task-list li input[type="checkbox"] {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
@@ -179,27 +200,29 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
     </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#function-calling-tools" id="toc-function-calling-tools" class="nav-link active" data-scroll-target="#function-calling-tools"><span class="header-section-number">9.1</span> Function Calling / Tools</a></li>
-  <li><a href="#chaining-llms" id="toc-chaining-llms" class="nav-link" data-scroll-target="#chaining-llms"><span class="header-section-number">9.2</span> Chaining LLMs</a></li>
-  <li><a href="#ai-agents" id="toc-ai-agents" class="nav-link" data-scroll-target="#ai-agents"><span class="header-section-number">9.3</span> AI Agents</a></li>
+<li>
+<a href="#tool-calling" id="toc-tool-calling" class="nav-link active" data-scroll-target="#tool-calling"><span class="header-section-number">9.1</span> Tool Calling</a>
+  <ul class="collapse">
+<li><a href="#about" id="toc-about" class="nav-link" data-scroll-target="#about"><span class="header-section-number">9.1.1</span> About</a></li>
+  <li><a href="#models-with-tool-calling" id="toc-models-with-tool-calling" class="nav-link" data-scroll-target="#models-with-tool-calling"><span class="header-section-number">9.1.2</span> Models with Tool Calling</a></li>
+  <li><a href="#tool-calling-r-functions" id="toc-tool-calling-r-functions" class="nav-link" data-scroll-target="#tool-calling-r-functions"><span class="header-section-number">9.1.3</span> Tool Calling R Functions</a></li>
   </ul>
-</nav>
+</li>
+  <li><a href="#ai-agents" id="toc-ai-agents" class="nav-link" data-scroll-target="#ai-agents"><span class="header-section-number">9.2</span> AI Agents</a></li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Miscellaneous Techniques</span></h1>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Miscellaneous Techniques</span>
+</h1>
 </div>
 
 
@@ -213,18 +236,219 @@ ul.task-list li input[type="checkbox"] {
   
 
 
-</header>
+</header><p>These are additional techniques in utilizing local LLMs that I want to learn, explore, and share.</p>
+<section id="tool-calling" class="level2" data-number="9.1"><h2 data-number="9.1" class="anchored" data-anchor-id="tool-calling">
+<span class="header-section-number">9.1</span> Tool Calling</h2>
+<section id="about" class="level3" data-number="9.1.1"><h3 data-number="9.1.1" class="anchored" data-anchor-id="about">
+<span class="header-section-number">9.1.1</span> About</h3>
+<p>[deepseek-r1:7b]</p>
+<p>Tool calling in the context of Large Language Models (LLMs) refers to a method where the model delegates specific subtasks or data retrieval processes to external tools, databases, or services. This approach allows LLMs to handle complex tasks more efficiently by leveraging specialized resources while maintaining higher-level reasoning capabilities internally.</p>
+<p><strong>Key Points:</strong></p>
+<ol type="1">
+<li><p><strong>Delegation of Tasks:</strong> Tool calling enables an LLM to break down intricate problems into manageable parts, delegating complex subtasks to external tools. For example, for a weather forecast request, the model might delegate data retrieval to a reliable meteorological service.</p></li>
+<li><p><strong>Efficiency and Resource Management:</strong> By offloading tasks that require external knowledge or resources, tool calling allows the LLM to stay focused on higher-level reasoning without being bogged down by internal processing limitations.</p></li>
+<li><p><strong>Access to External Resources:</strong> This method often involves accessing databases, APIs, or other systems, which can provide real-time data and specialized information crucial for accurate responses.</p></li>
+<li><p><strong>Privacy Considerations:</strong> Safeguards are in place to ensure that access to external tools does not expose sensitive information, maintaining data security and anonymization.</p></li>
+<li><p><strong>Task Limitations and Scalability:</strong> There is a boundary between tasks the LLM can handle natively and those it must outsource. Tool calling contributes to scalability but may be constrained by processing power and network capabilities when handling multiple complex tasks simultaneously.</p></li>
+</ol>
+<p>In essence, tool calling enhances an LLM’s functionality by expanding its problem-solving capabilities beyond basic text generation, allowing it to address a broader range of tasks efficiently and effectively.</p>
+</section><section id="models-with-tool-calling" class="level3" data-number="9.1.2"><h3 data-number="9.1.2" class="anchored" data-anchor-id="models-with-tool-calling">
+<span class="header-section-number">9.1.2</span> Models with Tool Calling</h3>
+<p>For Ollama, you can identify LLMs with tool calling capability from the description of the models in the Ollama’s model page, or from the <strong>template</strong> link on the page. For example, the template page for LLama3.2:3b is <a href="https://ollama.com/library/llama3.2/blobs/966de95ca8a6" class="uri">https://ollama.com/library/llama3.2/blobs/966de95ca8a6</a> with the following template text:</p>
+<pre class="custom"><code>&lt;|start_header_id|&gt;system&lt;|end_header_id|&gt;
 
+Cutting Knowledge Date: December 2023
 
-<p>These are additional techniques that I plan to learn, explore and share.</p>
-<section id="function-calling-tools" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="function-calling-tools"><span class="header-section-number">9.1</span> Function Calling / Tools</h2>
-</section>
-<section id="chaining-llms" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="chaining-llms"><span class="header-section-number">9.2</span> Chaining LLMs</h2>
-</section>
-<section id="ai-agents" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="ai-agents"><span class="header-section-number">9.3</span> AI Agents</h2>
+{{ if .System }}{{ .System }}
+{{- end }}
+{{- if .Tools }}When you receive a tool call response, use the output to format an answer to the orginal user question.
+
+You are a helpful assistant with tool calling capabilities.
+{{- end }}&lt;|eot_id|&gt;
+{{- range $i, $_ := .Messages }}
+{{- $last := eq (len (slice $.Messages $i)) 1 }}
+{{- if eq .Role "user" }}&lt;|start_header_id|&gt;user&lt;|end_header_id|&gt;
+{{- if and $.Tools $last }}
+
+Given the following functions, please respond with a JSON for a function call with its proper arguments that best answers the given prompt.
+
+Respond in the format {"name": function name, "parameters": dictionary of argument name and its value}. Do not use variables.
+
+{{ range $.Tools }}
+{{- . }}
+{{ end }}
+{{ .Content }}&lt;|eot_id|&gt;
+{{- else }}
+
+{{ .Content }}&lt;|eot_id|&gt;
+{{- end }}{{ if $last }}&lt;|start_header_id|&gt;assistant&lt;|end_header_id|&gt;
+
+{{ end }}
+{{- else if eq .Role "assistant" }}&lt;|start_header_id|&gt;assistant&lt;|end_header_id|&gt;
+{{- if .ToolCalls }}
+{{ range .ToolCalls }}
+{"name": "{{ .Function.Name }}", "parameters": {{ .Function.Arguments }}}{{ end }}
+{{- else }}
+
+{{ .Content }}
+{{- end }}{{ if not $last }}&lt;|eot_id|&gt;{{ end }}
+{{- else if eq .Role "tool" }}&lt;|start_header_id|&gt;ipython&lt;|end_header_id|&gt;
+
+{{ .Content }}&lt;|eot_id|&gt;{{ if $last }}&lt;|start_header_id|&gt;assistant&lt;|end_header_id|&gt;
+
+{{ end }}
+{{- end }}
+{{- end }}</code></pre>
+</section><section id="tool-calling-r-functions" class="level3" data-number="9.1.3"><h3 data-number="9.1.3" class="anchored" data-anchor-id="tool-calling-r-functions">
+<span class="header-section-number">9.1.3</span> Tool Calling R Functions</h3>
+<p>For tool calling, we will use <code>ellmer</code> package, which allows using tool calling of R functions (<a href="https://ellmer.tidyverse.org/reference/tool.html" class="uri">https://ellmer.tidyverse.org/reference/tool.html</a> and <a href="https://ellmer.tidyverse.org/articles/tool-calling.html" class="uri">https://ellmer.tidyverse.org/articles/tool-calling.html</a> for details).</p>
+<p>We start with the first example from <a href="https://ellmer.tidyverse.org/reference/tool.html" class="uri">https://ellmer.tidyverse.org/reference/tool.html</a>, we need to define the metadata that the model will use to understand when it needs to call the tool,</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ellmer.tidyverse.org">ellmer</a></span><span class="op">)</span></span>
+<span><span class="co"># define the metadata</span></span>
+<span><span class="va">tool_rnorm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ellmer.tidyverse.org/reference/tool.html">tool</a></span><span class="op">(</span></span>
+<span>  .fun <span class="op">=</span> <span class="va">rnorm</span>,</span>
+<span>  .description <span class="op">=</span> <span class="st">"Draw numbers from a random normal distribution"</span>,</span>
+<span>  n <span class="op">=</span> <span class="fu"><a href="https://ellmer.tidyverse.org/reference/type_boolean.html">type_integer</a></span><span class="op">(</span><span class="st">"The number of observations. Must be a positive integer."</span><span class="op">)</span>,</span>
+<span>  mean <span class="op">=</span> <span class="fu"><a href="https://ellmer.tidyverse.org/reference/type_boolean.html">type_number</a></span><span class="op">(</span><span class="st">"The mean value of the distribution."</span><span class="op">)</span>,</span>
+<span>  sd <span class="op">=</span> <span class="fu"><a href="https://ellmer.tidyverse.org/reference/type_boolean.html">type_number</a></span><span class="op">(</span><span class="st">"The standard deviation of the distribution. Must be a non-negative number."</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">tool_rnorm</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;ellmer::ToolDef&gt;
+ @ name       : chr "rnorm"
+ @ fun        : function (n, mean = 0, sd = 1)  
+ @ description: chr "Draw numbers from a random normal distribution"
+ @ arguments  : &lt;ellmer::TypeObject&gt;
+ .. @ description          : NULL
+ .. @ required             : logi TRUE
+ .. @ properties           :List of 3
+ .. .. $ n   : &lt;ellmer::TypeBasic&gt;
+ .. ..  ..@ description: chr "The number of observations. Must be a positive integer."
+ .. ..  ..@ required   : logi TRUE
+ .. ..  ..@ type       : chr "integer"
+ .. .. $ mean: &lt;ellmer::TypeBasic&gt;
+ .. ..  ..@ description: chr "The mean value of the distribution."
+ .. ..  ..@ required   : logi TRUE
+ .. ..  ..@ type       : chr "number"
+ .. .. $ sd  : &lt;ellmer::TypeBasic&gt;
+ .. ..  ..@ description: chr "The standard deviation of the distribution. Must be a non-negative number."
+ .. ..  ..@ required   : logi TRUE
+ .. ..  ..@ type       : chr "number"
+ .. @ additional_properties: logi FALSE</code></pre>
+</div>
+</div>
+<p>Then, we must redefine the provider’s base URL to Ollama’s OpenAI compatible endpoint as <code>base_url = "http://localhost:11434/v1"</code> according to <a href="https://ollama.com/blog/tool-support" class="uri">https://ollama.com/blog/tool-support</a>, specify the local LLM that we want to use, followed by registering the tool.</p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ellmer.tidyverse.org/reference/Provider.html">Provider</a></span><span class="op">(</span>base_url <span class="op">=</span> <span class="st">"http://localhost:11434/v1"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;ellmer::Provider&gt;
+ @ base_url  : chr "http://localhost:11434/v1"
+ @ extra_args: list()</code></pre>
+</div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">chat</span> <span class="op">=</span> <span class="fu"><a href="https://ellmer.tidyverse.org/reference/chat_ollama.html">chat_ollama</a></span><span class="op">(</span>model <span class="op">=</span> <span class="st">"llama3.2:3b"</span>, seed <span class="op">=</span> <span class="fl">111</span><span class="op">)</span></span>
+<span><span class="va">chat</span><span class="op">$</span><span class="fu">register_tool</span><span class="op">(</span><span class="va">tool_rnorm</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Finally, we can now try out the tool calling ability of the LLM,</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">chat</span><span class="op">$</span><span class="fu">chat</span><span class="op">(</span><span class="st">"Give me ten numbers from a random normal distribution with mean of 120 and standard deviation of 15."</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+The ten numbers generated from a normal distribution with a mean of 120 and 
+standard deviation of 15 are:
+
+1. 125.0977
+2. 140.8486
+3. 131.5419
+4. 140.3376
+5. 125.3349
+6. 134.1422
+7. 111.2048
+8. 126.6184
+9. 129.9178
+10. 123.316</code></pre>
+</div>
+</div>
+<p>We compare that to the response without tool calling using rollama’s query,</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">rollama</span><span class="fu">::</span><span class="fu"><a href="https://jbgruber.github.io/rollama/reference/query.html">query</a></span><span class="op">(</span><span class="st">"Give me ten numbers from a random normal distribution with mean of 120 and standard deviation of 15."</span>,</span>
+<span>               model <span class="op">=</span> <span class="st">"llama3.2"</span>, output <span class="op">=</span> <span class="st">"text"</span>, screen <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>               model_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>seed <span class="op">=</span> <span class="fl">111</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Here are ten numbers randomly drawn from a normal distribution with a mean of 120 and a standard deviation of 15:
+
+1. 108
+2. 145
+3. 115
+4. 131
+5. 121
+6. 139
+7. 124
+8. 148
+9. 113
+10. 127</code></pre>
+</div>
+</div>
+<p>If you were to ask any LLM this simple question, “What’s the time now?”, you will be greeted with a standard example, i.e.&nbsp;“I don’t know” or its variants,</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">rollama</span><span class="fu">::</span><span class="fu"><a href="https://jbgruber.github.io/rollama/reference/query.html">query</a></span><span class="op">(</span><span class="st">"What's the time now?"</span>, <span class="st">"llama3.2"</span>,</span>
+<span>               output <span class="op">=</span> <span class="st">"text"</span>, screen <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>               model_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>seed <span class="op">=</span> <span class="fl">111</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>I'm not currently able to share the time.</code></pre>
+</div>
+</div>
+<p>Now, we simplify the example from <a href="https://ellmer.tidyverse.org/articles/tool-calling.html" class="uri">https://ellmer.tidyverse.org/articles/tool-calling.html</a> by asking the current time.</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Gets the current time in local PC time zone.</span></span>
+<span><span class="va">get_current_time</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">get_current_time</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2025-02-06 16:16:06 +08"</code></pre>
+</div>
+</div>
+<p>Now, we register the tool,</p>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tool_get_current_time</span> <span class="op">=</span> <span class="fu"><a href="https://ellmer.tidyverse.org/reference/tool.html">tool</a></span><span class="op">(</span></span>
+<span>  <span class="va">get_current_time</span>,</span>
+<span>  <span class="st">"Gets the current time in local PC."</span><span class="op">)</span></span>
+<span><span class="va">tool_get_current_time</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;ellmer::ToolDef&gt;
+ @ name       : chr "get_current_time"
+ @ fun        : function ()  
+ @ description: chr "Gets the current time in local PC."
+ @ arguments  : &lt;ellmer::TypeObject&gt;
+ .. @ description          : NULL
+ .. @ required             : logi TRUE
+ .. @ properties           : list()
+ .. @ additional_properties: logi FALSE</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ellmer.tidyverse.org/reference/Provider.html">Provider</a></span><span class="op">(</span>base_url <span class="op">=</span> <span class="st">"http://localhost:11434/v1"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;ellmer::Provider&gt;
+ @ base_url  : chr "http://localhost:11434/v1"
+ @ extra_args: list()</code></pre>
+</div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">chat</span> <span class="op">=</span> <span class="fu"><a href="https://ellmer.tidyverse.org/reference/chat_ollama.html">chat_ollama</a></span><span class="op">(</span>model <span class="op">=</span> <span class="st">"llama3.2:3b"</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">chat</span><span class="op">$</span><span class="fu">register_tool</span><span class="op">(</span><span class="va">tool_get_current_time</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note that for this step, so far I could not manage to get the code <code>create_tool_metadata(get_current_time)</code> running to automatically generate the metadata. This might change in the future version of <code>ellmer</code>.</p>
+<p>Then, lastly, we try the query,</p>
+<div class="cell">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">chat</span><span class="op">$</span><span class="fu">chat</span><span class="op">(</span><span class="st">"What's the time now?"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+The current time is 4:16 PM.</code></pre>
+</div>
+</div>
+<p>which is the correct time in my PC at the time of writing.</p>
+</section></section><section id="ai-agents" class="level2" data-number="9.2"><h2 data-number="9.2" class="anchored" data-anchor-id="ai-agents">
+<span class="header-section-number">9.2</span> AI Agents</h2>
 <ul>
 <li>Web search</li>
 <li>LR search and summary</li>
@@ -233,10 +457,7 @@ ul.task-list li input[type="checkbox"] {
 <p>In progress …</p>
 
 
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -655,9 +876,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./ch8.html" class="pagination-link" aria-label="Fine-tuning">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Fine-tuning</span></span>
       </a>          
@@ -669,7 +888,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-
 
 
 
