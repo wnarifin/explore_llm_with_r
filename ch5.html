@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.42">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>5&nbsp; Embedding Generation – Exploring Large Language Models With R</title>
 <style>
@@ -67,10 +67,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-97a305611cbfd25bbccc16d93f2db226.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -211,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li>
 <a href="#understanding-numerical-embedding" id="toc-understanding-numerical-embedding" class="nav-link" data-scroll-target="#understanding-numerical-embedding"><span class="header-section-number">5.2</span> Understanding numerical embedding</a>
   <ul class="collapse">
-<li><a href="#text-to-embedding" id="toc-text-to-embedding" class="nav-link" data-scroll-target="#text-to-embedding"><span class="header-section-number">5.2.1</span> Text to embedding</a></li>
+<li><a href="#sec-text-embedding" id="toc-sec-text-embedding" class="nav-link" data-scroll-target="#sec-text-embedding"><span class="header-section-number">5.2.1</span> Text to embedding</a></li>
   <li><a href="#similarity-index" id="toc-similarity-index" class="nav-link" data-scroll-target="#similarity-index"><span class="header-section-number">5.2.2</span> Similarity index</a></li>
   </ul>
 </li>
@@ -221,9 +221,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">
-<span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Embedding Generation</span>
-</h1>
+<h1 class="title"><span id="sec-embedding" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Embedding Generation</span></span></h1>
 </div>
 
 
@@ -237,7 +235,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header><p>Embedding is a crucial component in LLMs. It that converts words into numerical vectors to preserve semantic meaning, capture relationships, and enable contextual understanding for the machines. It can used in retrieval augmented generation (RAG, see: <a href="https://ollama.com/blog/embedding-models" class="uri">https://ollama.com/blog/embedding-models</a>) and supervised learning (see: <a href="https://jbgruber.github.io/rollama/articles/text-embedding.html" class="uri">https://jbgruber.github.io/rollama/articles/text-embedding.html</a>).</p>
+</header><p>Embedding is a crucial component in LLMs. It that converts words into numerical vectors to preserve semantic meaning, capture relationships, and enable contextual understanding for the machines. It can be used in retrieval augmented generation (RAG, see: <a href="https://ollama.com/blog/embedding-models" class="uri">https://ollama.com/blog/embedding-models</a>) and supervised learning (see: <a href="https://jbgruber.github.io/rollama/articles/text-embedding.html" class="uri">https://jbgruber.github.io/rollama/articles/text-embedding.html</a>).</p>
 <p>In this chapter, we will learn about how to transform raw text data into numerical representations and we will investigate the role of similarity indices in the context of embeddings.</p>
 <section id="preliminaries" class="level2" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="preliminaries">
 <span class="header-section-number">5.1</span> Preliminaries</h2>
@@ -256,7 +254,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section><section id="understanding-numerical-embedding" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="understanding-numerical-embedding">
 <span class="header-section-number">5.2</span> Understanding numerical embedding</h2>
-<section id="text-to-embedding" class="level3" data-number="5.2.1"><h3 data-number="5.2.1" class="anchored" data-anchor-id="text-to-embedding">
+<section id="sec-text-embedding" class="level3" data-number="5.2.1"><h3 data-number="5.2.1" class="anchored" data-anchor-id="sec-text-embedding">
 <span class="header-section-number">5.2.1</span> Text to embedding</h3>
 <p>The example and text were taken from <a href="https://ollama.com/blog/embedding-models" class="uri">https://ollama.com/blog/embedding-models</a>. For our understanding, let’s retrieve back the relevant text (i.e.&nbsp;related in semantic meaning).</p>
 <p>We convert the strings into vectors via <code>nomic-embed-text</code> model.</p>
@@ -625,8 +623,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -737,7 +733,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

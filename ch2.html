@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.42">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>2&nbsp; Local Large Language Models – Exploring Large Language Models With R</title>
 <style>
@@ -87,10 +87,10 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-97a305611cbfd25bbccc16d93f2db226.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -370,7 +370,7 @@ div.csl-indent {
 </ul></section><section id="getting-started-with-rollama" class="level3" data-number="2.4.2"><h3 data-number="2.4.2" class="anchored" data-anchor-id="getting-started-with-rollama">
 <span class="header-section-number">2.4.2</span> Getting Started with <code>rollama</code>
 </h3>
-<p>In this book, we will mainly rely on <code>rollama</code> package <span class="citation" data-cites="R-rollama">(<a href="#ref-R-rollama" role="doc-biblioref">Gruber &amp; Weber, 2024</a>)</span>. To get started, there are three basic preliminary steps:</p>
+<p>In this book, we will mainly rely on <code>rollama</code> package <span class="citation" data-cites="R-rollama">(<a href="#ref-R-rollama" role="doc-biblioref">Gruber &amp; Weber, 2025</a>)</span>. To get started, there are three basic preliminary steps:</p>
 <ol type="1">
 <li>Install Ollama <a href="https://ollama.com/download" class="uri">https://ollama.com/download</a> (this depends on the OS in your PC)</li>
 <li>Install <code>rollama</code> package in R with <code>install.packages("rollama")</code>
@@ -886,7 +886,7 @@ contribute to its ecosystem.</code></pre>
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
 <div id="ref-R-rollama" class="csl-entry" role="listitem">
-Gruber, J. B., &amp; Weber, M. (2024). <em>Rollama: Communicate with ollama to run large language models locally</em>. Retrieved from <a href="https://jbgruber.github.io/rollama/">https://jbgruber.github.io/rollama/</a>
+Gruber, J. B., &amp; Weber, M. (2025). <em>Rollama: Communicate with ollama to run large language models locally</em>. Retrieved from <a href="https://jbgruber.github.io/rollama/">https://jbgruber.github.io/rollama/</a>
 </div>
 <div id="ref-localLLM2024" class="csl-entry" role="listitem">
 "Unleashing the Power of Local LLMs". (2024). Unleashing the power of local LLMs: A comprehensive guide. Website. Retrieved from <a href="https://localxpose.io/blog/unleashing-the-power-of-local-llms">https://localxpose.io/blog/unleashing-the-power-of-local-llms</a>
@@ -974,8 +974,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1086,7 +1084,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

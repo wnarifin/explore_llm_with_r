@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
-
+<meta name="generator" content="quarto-1.6.42">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
 <title>7&nbsp; Retrieval Augmented Generation – Exploring Large Language Models With R</title>
 <style>
 code{white-space: pre-wrap;}
@@ -20,8 +17,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
-
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
@@ -37,11 +67,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-97a305611cbfd25bbccc16d93f2db226.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -67,17 +96,13 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-
-
+}</script><link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 </head>
-
 <body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -88,13 +113,9 @@ ul.task-list li input[type="checkbox"] {
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Exploring Large Language Models With R</a> 
     </div>
@@ -106,7 +127,7 @@ ul.task-list li input[type="checkbox"] {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
@@ -179,24 +200,27 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
     </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#deep-dive-how-it-works" id="toc-deep-dive-how-it-works" class="nav-link active" data-scroll-target="#deep-dive-how-it-works"><span class="header-section-number">7.1</span> Deep-dive: How it works</a></li>
+<li><a href="#about" id="toc-about" class="nav-link active" data-scroll-target="#about"><span class="header-section-number">7.1</span> About</a></li>
+  <li>
+<a href="#basic-rag-with-chroma" id="toc-basic-rag-with-chroma" class="nav-link" data-scroll-target="#basic-rag-with-chroma"><span class="header-section-number">7.2</span> Basic RAG with Chroma</a>
+  <ul class="collapse">
+<li><a href="#setting-up-chromadb-collection" id="toc-setting-up-chromadb-collection" class="nav-link" data-scroll-target="#setting-up-chromadb-collection"><span class="header-section-number">7.2.1</span> Setting up ChromaDB collection</a></li>
+  <li><a href="#retrieving-information-from-chromadb-collection" id="toc-retrieving-information-from-chromadb-collection" class="nav-link" data-scroll-target="#retrieving-information-from-chromadb-collection"><span class="header-section-number">7.2.2</span> Retrieving information from ChromaDB collection</a></li>
+  <li><a href="#basic-rag" id="toc-basic-rag" class="nav-link" data-scroll-target="#basic-rag"><span class="header-section-number">7.2.3</span> Basic RAG</a></li>
   </ul>
-</nav>
+</li>
+  <li><a href="#deep-dive-how-it-works" id="toc-deep-dive-how-it-works" class="nav-link" data-scroll-target="#deep-dive-how-it-works"><span class="header-section-number">7.3</span> Deep-dive: How it works</a></li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title"><span id="sec-rag" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Retrieval Augmented Generation</span></span></h1>
 </div>
 
@@ -211,22 +235,305 @@ ul.task-list li input[type="checkbox"] {
   
 
 
-</header>
-
-
+</header><p>LLMs generally have limited knowledge; they only know what was ‘taught’ to them based on their training texts. Any new information not included in these texts is beyond their generation capability. It is impractical to retrain LLMs every time we want them to generate text with new information. A simple solution is to provide the necessary information directly in our queries. However, if we do not know exactly what we are looking for and the required information might be from a thick technical manual, a more practical approach is Retrieval-Augmented Generation (RAG). In this chapter, we will explore how to perform RAG by pairing our knowledge in the form of a vector database with LLMs.</p>
+<p>In this chapter, we will explore how to perform RAG by pairing our knowledge in the form of a vector database with LLMs. So far, most resources I have found are in Python, and I aim to achieve this using R.</p>
+<section id="about" class="level2" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="about">
+<span class="header-section-number">7.1</span> About</h2>
+<p>[deepseek-r1:7b]</p>
+<p>RAG is an approach that enhances LLMs by augmenting their capabilities with document retrieval systems. This integration allows for more accurate, relevant, and contextually informed responses compared to relying solely on the model’s internal knowledge.</p>
+<p><strong>How It Works:</strong></p>
+<ol type="1">
+<li>
+<strong>Document Retrieval:</strong> When a query is received, RAG first retrieves relevant documents or passages from an external source (e.g., a database) using techniques like embedding-based search.</li>
+<li>
+<strong>Context Integration:</strong> The retrieved documents are then provided to the LLM as context, enabling the model to generate responses informed by both its internal knowledge and the specific retrieved information.</li>
+</ol>
+<p><strong>Key Components:</strong></p>
 <ul>
-<li>Why? To give updated information to LLMs</li>
-<li>How to do in R?</li>
+<li>
+<strong>Embedding-Based Retrieval:</strong> Documents are converted into vector representations, allowing efficient matching with query vectors through similarity measures.</li>
+<li>
+<strong>Efficient Search:</strong> Techniques like vector databases or similarity search quickly identify relevant documents, ensuring timely retrieval without significant computational overhead.</li>
 </ul>
-<section id="deep-dive-how-it-works" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="deep-dive-how-it-works"><span class="header-section-number">7.1</span> Deep-dive: How it works</h2>
+<p><strong>Why Use RAG?</strong></p>
+<ol type="1">
+<li>
+<strong>Enhanced Accuracy:</strong> By incorporating up-to-date or specific data, RAG reduces reliance on the model’s potentially outdated or generic knowledge.</li>
+<li>
+<strong>Handling Specialized Queries:</strong> RAG is particularly effective for domain-specific questions requiring detailed information beyond the model’s training data.</li>
+<li>
+<strong>Efficiency:</strong> Focusing the model on a subset of relevant documents can optimize performance and reduce computational demands.</li>
+</ol>
+<p><strong>Use Cases:</strong></p>
+<ul>
+<li>Customer service chatbots needing access to product details or customer records.</li>
+<li>Healthcare applications where accurate medical guidelines are crucial.</li>
+</ul>
+<p>RAG differs from fine-tuning (which involves retraining the model) or prompt engineering (which relies on phrasing) by adding external context without altering the model itself. RAG effectively bridges the gap between LLM general knowledge and specific, detailed information, offering more accurate and relevant responses through augmented input.</p>
+</section><section id="basic-rag-with-chroma" class="level2" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="basic-rag-with-chroma">
+<span class="header-section-number">7.2</span> Basic RAG with Chroma</h2>
+<p>We learned about text embedding and how we can utilize it to find texts related to our query in <a href="ch5.html" class="quarto-xref"><span>Chapter 5</span></a>. Now, in the context of RAG, let’s go back to the text in <a href="ch5.html#sec-text-embedding" class="quarto-xref"><span>Section 5.2.1</span></a> (<a href="https://ollama.com/blog/embedding-models" class="uri">https://ollama.com/blog/embedding-models</a>). Suppose that now, we want to ask a query, find the related text, then let an LLM answer our query based on the information (retrieved text) given to it. We will use Chroma (<a href="https://www.trychroma.com/" class="uri">https://www.trychroma.com/</a>) and <code>rchroma</code> (<a href="https://cynkra.github.io/rchroma/" class="uri">https://cynkra.github.io/rchroma/</a>) for that. Make sure you have a working Chroma installation (client-server mode <a href="https://docs.trychroma.com/docs/run-chroma/client-server" class="uri">https://docs.trychroma.com/docs/run-chroma/client-server</a>, docker <a href="https://docs.trychroma.com/production/containers/docker" class="uri">https://docs.trychroma.com/production/containers/docker</a>) accessible at localhost:8000 (e.g.&nbsp;<a href="http://localhost:8000/api/v2" class="uri">http://localhost:8000/api/v2</a>). We will also used our beloved <code>rollama</code> for generating embeddings and text generation using LLMs of our choice.</p>
+<p>Load these packages,</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/cynkra/rchroma">rchroma</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://jbgruber.github.io/rollama/">rollama</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Make sure that your Ollama is running,</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://jbgruber.github.io/rollama/reference/ping_ollama.html">ping_ollama</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># ensure it's running</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>▶ Ollama (v0.6.7) is running at &lt;http://localhost:11434&gt;!</code></pre>
+</div>
+</div>
+<p>Make sure Chroma server is running. In my case, I am using the client-server mode, and I check its status at <a href="http://localhost:8000/api/v2" class="uri">http://localhost:8000/api/v2</a>. If you are running Chroma via Docker, you may check by <code><a href="https://rdrr.io/pkg/rchroma/man/chroma_docker_running.html">chroma_docker_running()</a></code>.</p>
+<p>We create a Chroma client connection,</p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">client</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/rchroma/man/chroma_connect.html">chroma_connect</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>and check its status using <code><a href="https://rdrr.io/pkg/rchroma/man/heartbeat.html">heartbeat()</a></code>,</p>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/rchroma/man/heartbeat.html">heartbeat</a></span><span class="op">(</span><span class="va">client</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.747906e+18</code></pre>
+</div>
+</div>
+<section id="setting-up-chromadb-collection" class="level3" data-number="7.2.1"><h3 data-number="7.2.1" class="anchored" data-anchor-id="setting-up-chromadb-collection">
+<span class="header-section-number">7.2.1</span> Setting up ChromaDB collection</h3>
+<p>Next, we create a ChromaDB collection named “my_collection”,</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/rchroma/man/create_collection.html">create_collection</a></span><span class="op">(</span><span class="va">client</span>, <span class="st">"my_collection"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$id
+[1] "4d2a6726-2c57-4b20-bb26-f1a52dc2079f"
+
+$name
+[1] "my_collection"
+
+$configuration_json
+$configuration_json$hnsw
+$configuration_json$hnsw$space
+[1] "l2"
+
+$configuration_json$hnsw$ef_construction
+[1] 100
+
+$configuration_json$hnsw$ef_search
+[1] 100
+
+$configuration_json$hnsw$max_neighbors
+[1] 16
+
+$configuration_json$hnsw$resize_factor
+[1] 1.2
+
+$configuration_json$hnsw$sync_threshold
+[1] 1000
+
+
+$configuration_json$spann
+NULL
+
+$configuration_json$embedding_function
+NULL
+
+
+$metadata
+NULL
+
+$dimension
+NULL
+
+$tenant
+[1] "default_tenant"
+
+$database
+[1] "default_database"
+
+$log_position
+[1] 0
+
+$version
+[1] 0</code></pre>
+</div>
+</div>
+<p>Chroma and <code>rchroma</code> currently uses “l2” similarity index as the default distance function.</p>
+<p>In order to add text documents to “the collection”my_collection”, we will use <code><a href="https://rdrr.io/pkg/rchroma/man/add_documents.html">add_documents()</a></code> function. To properly use the function, it involves several steps. First, we prepare the text, for example we use text strings from <a href="https://ollama.com/blog/embedding-models" class="uri">https://ollama.com/blog/embedding-models</a>,</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">documents</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>  <span class="st">"Llamas are members of the camelid family meaning they're pretty closely related to vicunas and camels"</span>,</span>
+<span>  <span class="st">"Llamas were first domesticated and used as pack animals 4,000 to 5,000 years ago in the Peruvian highlands"</span>,</span>
+<span>  <span class="st">"Llamas can grow as much as 6 feet tall though the average llama between 5 feet 6 inches and 5 feet 9 inches tall"</span>,</span>
+<span>  <span class="st">"Llamas weigh between 280 and 450 pounds and can carry 25 to 30 percent of their body weight"</span>,</span>
+<span>  <span class="st">"Llamas are vegetarians and have very efficient digestive systems"</span>,</span>
+<span>  <span class="st">"Llamas live to be about 20 years old, though some only live for 15 years and others live to be 30 years old"</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>and convert the text into text embeddings via <code>nomic-embed-text</code> embedding model,</p>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">embeddings</span> <span class="op">=</span> <span class="fu"><a href="https://jbgruber.github.io/rollama/reference/embed_text.html">embed_text</a></span><span class="op">(</span><span class="va">documents</span>, <span class="st">"nomic-embed-text"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The function expects unnamed list of numeric vectors for the <code>embeddings</code> option, therefore we have to convert the embeddings from tibble to unnamed list,</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">unnamed_embeddings</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">embeddings</span>, <span class="fl">2</span>, <span class="va">as.numeric</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span>f <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">documents</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Lastly, we add these objects to the function,</p>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/rchroma/man/add_documents.html">add_documents</a></span><span class="op">(</span></span>
+<span>  <span class="va">client</span>,</span>
+<span>  <span class="st">"my_collection"</span>,</span>
+<span>  documents <span class="op">=</span> <span class="va">documents</span>,</span>
+<span>  ids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"doc"</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">documents</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  embeddings <span class="op">=</span> <span class="va">unnamed_embeddings</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>named list()</code></pre>
+</div>
+</div>
+<p>Note that the option <code>ids</code> is compulsory. So we generate the <code>ids</code> as combinations of “doc” and “1:length(documents)” e.g.&nbsp;“doc1”, “doc2”, and so on.</p>
+<p>We can view configuration details of “my_collection”,</p>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/rchroma/man/get_collection.html">get_collection</a></span><span class="op">(</span><span class="va">client</span>, <span class="st">"my_collection"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$id
+[1] "4d2a6726-2c57-4b20-bb26-f1a52dc2079f"
+
+$name
+[1] "my_collection"
+
+$configuration_json
+$configuration_json$hnsw
+$configuration_json$hnsw$space
+[1] "l2"
+
+$configuration_json$hnsw$ef_construction
+[1] 100
+
+$configuration_json$hnsw$ef_search
+[1] 100
+
+$configuration_json$hnsw$max_neighbors
+[1] 16
+
+$configuration_json$hnsw$resize_factor
+[1] 1.2
+
+$configuration_json$hnsw$sync_threshold
+[1] 1000
+
+
+$configuration_json$spann
+NULL
+
+$configuration_json$embedding_function
+NULL
+
+
+$metadata
+NULL
+
+$dimension
+[1] 768
+
+$tenant
+[1] "default_tenant"
+
+$database
+[1] "default_database"
+
+$log_position
+[1] 0
+
+$version
+[1] 0</code></pre>
+</div>
+</div>
+</section><section id="retrieving-information-from-chromadb-collection" class="level3" data-number="7.2.2"><h3 data-number="7.2.2" class="anchored" data-anchor-id="retrieving-information-from-chromadb-collection">
+<span class="header-section-number">7.2.2</span> Retrieving information from ChromaDB collection</h3>
+<p>Before we try out basic RAG, let’s look at how to retrieve/query the collection. We set up the query text and its embedding,</p>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">query_text</span> <span class="op">=</span> <span class="st">"What animals are llamas related to?"</span></span>
+<span><span class="va">query_embedding</span> <span class="op">=</span> <span class="fu"><a href="https://jbgruber.github.io/rollama/reference/embed_text.html">embed_text</a></span><span class="op">(</span><span class="va">query_text</span>, <span class="st">"nomic-embed-text:latest"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Then, we query “my_collection”. Note we use <code><a href="https://rdrr.io/pkg/rchroma/man/query.html">rchroma::query()</a></code> because it overlaps with <code>rollama</code>’s <code><a href="https://rdrr.io/pkg/rchroma/man/query.html">query()</a></code> function,</p>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">result</span> <span class="op">=</span> <span class="fu">rchroma</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rchroma/man/query.html">query</a></span><span class="op">(</span></span>
+<span>  <span class="va">client</span>,</span>
+<span>  <span class="st">"my_collection"</span>,</span>
+<span>  query_embeddings <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">query_embedding</span><span class="op">)</span>,</span>
+<span>  n_results <span class="op">=</span> <span class="fl">3</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>where <code>n_results</code> is the number of results to return per query. We set it to “3”.</p>
+<p>We can view these three results and their distances,</p>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">result</span><span class="op">$</span><span class="va">documents</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] "Llamas are members of the camelid family meaning they're pretty closely related to vicunas and camels"
+
+[[2]]
+[1] "Llamas are vegetarians and have very efficient digestive systems"
+
+[[3]]
+[1] "Llamas weigh between 280 and 450 pounds and can carry 25 to 30 percent of their body weight"</code></pre>
+</div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">result</span><span class="op">$</span><span class="va">distances</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] 98.88392
+
+[[2]]
+[1] 194.9566
+
+[[3]]
+[1] 214.2481</code></pre>
+</div>
+</div>
+<p>Specifically, we are interested in the first result,</p>
+<div class="cell">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">output</span> <span class="op">=</span> <span class="va">result</span><span class="op">$</span><span class="va">documents</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">output</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Llamas are members of the camelid family meaning they're pretty closely related to vicunas and camels"</code></pre>
+</div>
+</div>
+</section><section id="basic-rag" class="level3" data-number="7.2.3"><h3 data-number="7.2.3" class="anchored" data-anchor-id="basic-rag">
+<span class="header-section-number">7.2.3</span> Basic RAG</h3>
+<p>Now, we integrate the returned query output in our prompt. We can write our basic prompt like this,</p>
+<div class="cell">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">q_text</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Based on the following information:"</span>,</span>
+<span>               <span class="va">output</span>,</span>
+<span>               <span class="st">"\nAnswer the query:"</span>,</span>
+<span>               <span class="va">query_text</span>,</span>
+<span>               <span class="st">"\nUse only the information provided. Do not reference external knowledge, assumptions, or sources not explicitly included in the given text. If the information is insufficient to answer the query, state that clearly."</span><span class="op">)</span></span>
+<span><span class="co"># Prompt writing with the help of qwen3:14b</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="va">q_text</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Based on the following information: Llamas are members of the camelid family meaning they're pretty closely related to vicunas and camels 
+Answer the query: What animals are llamas related to? 
+Use only the information provided. Do not reference external knowledge, assumptions, or sources not explicitly included in the given text. If the information is insufficient to answer the query, state that clearly.</code></pre>
+</div>
+</div>
+<p>Then, we use the prompt to query the LLM, e.g.&nbsp;<code>llama3.2:3b</code> in our case,</p>
+<div class="cell">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">rollama</span><span class="fu">::</span><span class="fu"><a href="https://jbgruber.github.io/rollama/reference/query.html">query</a></span><span class="op">(</span><span class="va">q_text</span>, model <span class="op">=</span> <span class="st">"llama3.2:3b"</span>,</span>
+<span>      screen <span class="op">=</span> <span class="cn">F</span>, output <span class="op">=</span> <span class="st">"text"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Based on the provided information, it can be concluded that:
+
+Llamas are related to vicunas and camels.
+
+However, the information does not provide a comprehensive list of all animals that llamas are related to. It only mentions that they are part of the camelid family, but does not specify other relatives.</code></pre>
+</div>
+</div>
+<p>So, instead of spitting out the original text “Llamas are members of the camelid family meaning they’re pretty closely related to vicunas and camels”, the LLM synthesize the information and answer the query.</p>
+</section></section><section id="deep-dive-how-it-works" class="level2" data-number="7.3"><h2 data-number="7.3" class="anchored" data-anchor-id="deep-dive-how-it-works">
+<span class="header-section-number">7.3</span> Deep-dive: How it works</h2>
 <p>In progress …</p>
 
 
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -308,8 +615,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -420,7 +725,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
@@ -645,9 +949,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./ch6.html" class="pagination-link" aria-label="Text Classification">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Text Classification</span></span>
       </a>          
@@ -659,7 +961,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-
 
 
 

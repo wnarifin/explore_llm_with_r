@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.42">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>4&nbsp; Vision – Exploring Large Language Models With R</title>
 <style>
@@ -67,10 +67,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-97a305611cbfd25bbccc16d93f2db226.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -213,7 +213,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#interpreting-a-plot" id="toc-interpreting-a-plot" class="nav-link" data-scroll-target="#interpreting-a-plot"><span class="header-section-number">4.4</span> Interpreting a Plot</a></li>
   <li><a href="#r-coding-from-image" id="toc-r-coding-from-image" class="nav-link" data-scroll-target="#r-coding-from-image"><span class="header-section-number">4.5</span> R Coding from Image</a></li>
   <li><a href="#r-coding-from-image-two-step-approach" id="toc-r-coding-from-image-two-step-approach" class="nav-link" data-scroll-target="#r-coding-from-image-two-step-approach"><span class="header-section-number">4.6</span> R Coding from Image – Two-step Approach</a></li>
-  <li><a href="#vision-llms-as-ocr-tools" id="toc-vision-llms-as-ocr-tools" class="nav-link" data-scroll-target="#vision-llms-as-ocr-tools"><span class="header-section-number">4.7</span> Vision LLMs as OCR Tools</a></li>
+  <li><a href="#vlms-as-ocr-tools" id="toc-vlms-as-ocr-tools" class="nav-link" data-scroll-target="#vlms-as-ocr-tools"><span class="header-section-number">4.7</span> VLMs as OCR Tools</a></li>
   <li><a href="#interpreting-a-result-table" id="toc-interpreting-a-result-table" class="nav-link" data-scroll-target="#interpreting-a-result-table"><span class="header-section-number">4.8</span> Interpreting a Result Table</a></li>
   <li><a href="#performing-ocr-on-a-result-table" id="toc-performing-ocr-on-a-result-table" class="nav-link" data-scroll-target="#performing-ocr-on-a-result-table"><span class="header-section-number">4.9</span> Performing OCR on a Result Table</a></li>
   <li><a href="#deep-dive-how-it-works" id="toc-deep-dive-how-it-works" class="nav-link" data-scroll-target="#deep-dive-how-it-works"><span class="header-section-number">4.10</span> Deep-dive: How it works</a></li>
@@ -238,8 +238,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header><p>One of the primary uses of Large Language Models (LLMs) is their ability to generate high-quality textual content, making them invaluable in a variety of applications. Common examples include automated content creation for blogs and social media posts, intelligent chatbots that engage in natural conversations, and multilingual translations that maintain accuracy and fluency. These models can produce coherent narratives, informative summaries, and conversational responses that closely mimic human writing styles.</p>
-<p>In this chapter, we will explore how to perform text generation tasks in R using the <code>rollama</code> package for a variety of relevant use cases in academic and medical research. For the generated text, you will actually get different results from mine due to the random nature of text generation process.</p>
+</header><p>Another prevalent use of LLMs is in the form of vision language models (VLMs). In the previous chapter, tasks involved generating text from text input alone; now these tasks include generating text based on image and text instructions. For example, we might want a VLM to write a short comment about a graph or even perform optical character recognition (OCR) tasks. Unlike typical LLMs that do not have the capability to process images directly, VLMs are enabled with the ability to read images, typically in base64 format, which is commonly used to embed images in HTML files. Base64-encoded images are essentially strings of text, explaining why vision language models can effectively handle image data.</p>
+<p>In this chapter, we will explore how to perform several image-and-text to text generation tasks in R using the <code>rollama</code> package for a variety of relevant use cases in academic and medical research. Again, for the generated text, you will actually get different results from mine due to the random nature of text generation process.</p>
 <section id="preliminaries" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="preliminaries">
 <span class="header-section-number">4.1</span> Preliminaries</h2>
 <p>Load these packages,</p>
@@ -265,7 +265,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section><section id="interpreting-an-image" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="interpreting-an-image">
 <span class="header-section-number">4.2</span> Interpreting an Image</h2>
-<p>Suppose we want a vision LLM to describe the image of the NVIDIA GPU in Chapter 2, which I placed at the path “img/nvidia.jpeg” in my local PC.</p>
+<p>Suppose we want a VLM to describe the image of the NVIDIA GPU in Chapter 2, which I placed at the path “img/nvidia.jpeg” in my local PC.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="img/nvidia.jpeg" class="img-fluid figure-img"></p>
 <figcaption>The NVIDIA RTX4090. Source: <a href="https://www.nvidia.com/en-us/geforce/graphics-cards/" class="uri">https://www.nvidia.com/en-us/geforce/graphics-cards/</a></figcaption></figure>
@@ -329,7 +329,7 @@ with users about plan limits and upgrading options on the messaging
 platform.</code></pre>
 </div>
 </div>
-<p>Not all vision LLM supports multiple images. You can try with <code>minicpm-v</code>, and you will be greeted with an error.</p>
+<p>Not all VLM supports multiple images. You can try with <code>minicpm-v</code>, and you will be greeted with an error.</p>
 <div class="cell">
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://jbgruber.github.io/rollama/reference/query.html">query</a></span><span class="op">(</span><span class="st">"Describe the images:"</span>,</span>
 <span>      <span class="va">minicpm</span>, <span class="co"># model dependent, llava can interpret more than 1 image</span></span>
@@ -364,7 +364,7 @@ Caused by error in `strsplit()`:
   2 </code></pre>
 </div>
 </div>
-<p>Now, we can send the query a vision LLM model to describe the image,</p>
+<p>Now, we can send the query a VLM model to describe the image,</p>
 <div class="cell">
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://jbgruber.github.io/rollama/reference/query.html">query</a></span><span class="op">(</span><span class="st">"Describe the image:"</span>, <span class="va">llava</span>, images <span class="op">=</span> <span class="va">image_name</span>,</span>
 <span>      output <span class="op">=</span> <span class="st">"text"</span>, screen <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -508,7 +508,7 @@ ggplot(data, aes(x = Weight, y = Frequency)) +
 <p>which looks closely similar to the provided plot, although it did not use <code>ggplot2</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. This seems to be the limitation of the local LLMs that we have tried so far.</p>
 </section><section id="r-coding-from-image-two-step-approach" class="level2" data-number="4.6"><h2 data-number="4.6" class="anchored" data-anchor-id="r-coding-from-image-two-step-approach">
 <span class="header-section-number">4.6</span> R Coding from Image – Two-step Approach</h2>
-<p>Instead of relying on only one vision LLM, what if we combine a vision LLM with another LLM that is good at coding?</p>
+<p>Instead of relying on only one VLM, what if we combine a VLM with another LLM that is good at coding?</p>
 <p>Let’s try our idea. We start by asking <code>llama3.2-vision</code> to describe the image in detail,</p>
 <div class="cell">
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://jbgruber.github.io/rollama/reference/query.html">query</a></span><span class="op">(</span><span class="st">"Provide a clear and detailed description of the image to accurately recreate it as a chart. Include the type of plot, data points, axis labels, scale, colours, and any other relevant details needed for precise reproduction."</span></span>
@@ -593,9 +593,9 @@ barplot(frequencies,
 </div>
 </div>
 <p>Now, plot looks better with this two-step approach. Because the code generation is not deterministic in nature, you can always regenerate the code by removing the seed number.</p>
-</section><section id="vision-llms-as-ocr-tools" class="level2" data-number="4.7"><h2 data-number="4.7" class="anchored" data-anchor-id="vision-llms-as-ocr-tools">
-<span class="header-section-number">4.7</span> Vision LLMs as OCR Tools</h2>
-<p>Let’s try out vision LLMs as OCR tools. Say we have a PDF file from <a href="https://wnarifin.github.io/misc/Attitude_Statistics%20v3%20Questions.pdf" class="uri">https://wnarifin.github.io/misc/Attitude_Statistics%20v3%20Questions.pdf</a>.</p>
+</section><section id="vlms-as-ocr-tools" class="level2" data-number="4.7"><h2 data-number="4.7" class="anchored" data-anchor-id="vlms-as-ocr-tools">
+<span class="header-section-number">4.7</span> VLMs as OCR Tools</h2>
+<p>Let’s try out VLMs as OCR tools. Say we have a PDF file from <a href="https://wnarifin.github.io/misc/Attitude_Statistics%20v3%20Questions.pdf" class="uri">https://wnarifin.github.io/misc/Attitude_Statistics%20v3%20Questions.pdf</a>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><embed src="https://wnarifin.github.io/misc/Attitude_Statistics%20v3%20Questions.pdf" class="img-fluid" style="width:90.0%"></p>
 <figcaption>PDF to be converted</figcaption></figure>
@@ -666,7 +666,7 @@ disagree agree
 <p>The output of the LLM is quite comparable to that of OCR (after several refresh/regeneration though). Another notable difference is the absence of the Likert scale from 1 to 5 from the output. You may try using other images containing text. From my testing, it occasionally comments on or generates non-existent text.</p>
 </section><section id="interpreting-a-result-table" class="level2" data-number="4.8"><h2 data-number="4.8" class="anchored" data-anchor-id="interpreting-a-result-table">
 <span class="header-section-number">4.8</span> Interpreting a Result Table</h2>
-<p>Now, we try to ask vision LLMs to interpret statistical result tables, which are commonly found in academic journals. Let’s try with this table from <a href="https://wnarifin.github.io/2024-r-conf-my-pres-R/#29" class="uri">https://wnarifin.github.io/2024-r-conf-my-pres-R/#29</a>,</p>
+<p>Now, we try to ask VLMs to interpret statistical result tables, which are commonly found in academic journals. Let’s try with this table from <a href="https://wnarifin.github.io/2024-r-conf-my-pres-R/#29" class="uri">https://wnarifin.github.io/2024-r-conf-my-pres-R/#29</a>,</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="img/tbl1.png" class="img-fluid figure-img"></p>
 <figcaption>A sample statistical result table.</figcaption></figure>
@@ -878,8 +878,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -990,7 +988,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

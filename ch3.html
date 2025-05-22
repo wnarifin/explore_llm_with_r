@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.42">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>3&nbsp; Text Generation – Exploring Large Language Models With R</title>
 <style>
@@ -87,10 +87,10 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-97a305611cbfd25bbccc16d93f2db226.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -265,7 +265,7 @@ div.csl-indent {
 
 
 </header><p>One of the primary uses of Large Language Models (LLMs) is their ability to generate high-quality textual content, making them invaluable in a variety of applications. Common examples include automated content creation for blogs and social media posts, intelligent chatbots that engage in natural conversations, and multilingual translations that maintain accuracy and fluency. These models can produce coherent narratives, informative summaries, and conversational responses that closely mimic human writing styles.</p>
-<p>In this chapter, we will explore how to perform text generation tasks in R using the <code>rollama</code> package <span class="citation" data-cites="R-rollama">(<a href="#ref-R-rollama" role="doc-biblioref">Gruber &amp; Weber, 2024</a>)</span> for a variety of relevant use cases in academic and medical research. For the generated text, you will actually get different results from mine due to the random nature of text generation process.</p>
+<p>In this chapter, we will explore how to perform text generation tasks in R using the <code>rollama</code> package <span class="citation" data-cites="R-rollama">(<a href="#ref-R-rollama" role="doc-biblioref">Gruber &amp; Weber, 2025</a>)</span> for a variety of relevant use cases in academic and medical research. For the generated text, you will actually get different results from mine due to the random nature of text generation process.</p>
 <section id="preliminaries" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="preliminaries">
 <span class="header-section-number">3.1</span> Preliminaries</h2>
 <p>Load these packages,</p>
@@ -668,7 +668,7 @@ Husereau, D., Drummond, M., Augustovski, F., et al., (2023). Consolidated health
 <p>Here we increase the context window to 2000. <em>Context window/size</em> is number of tokens that can be LLM can receive/produce as input/output. It is around 3/2 times words in a given text. Please ask your LLM companion for more information about it :-)</p>
 </section><section id="summarizing-abstracts-from-pubmed" class="level2" data-number="3.6"><h2 data-number="3.6" class="anchored" data-anchor-id="summarizing-abstracts-from-pubmed">
 <span class="header-section-number">3.6</span> Summarizing Abstracts From PubMed</h2>
-<p>Get abstract from PubMed on <em>Partial verification bias</em> from year 2020 until 2025. This requires <code>pubmedR</code> <span class="citation" data-cites="R-pubmedR">(<a href="#ref-R-pubmedR" role="doc-biblioref">Aria, 2020</a>)</span> and <code>bibliometrix</code> <span class="citation" data-cites="R-bibliometrix bibliometrix2017">(<a href="#ref-bibliometrix2017" role="doc-biblioref">Aria &amp; Cuccurullo, 2017</a>, <a href="#ref-R-bibliometrix" role="doc-biblioref">2024</a>)</span> packages.</p>
+<p>Get abstract from PubMed on <em>Partial verification bias</em> from year 2020 until 2025. This requires <code>pubmedR</code> <span class="citation" data-cites="R-pubmedR">(<a href="#ref-R-pubmedR" role="doc-biblioref">Aria, 2020</a>)</span> and <code>bibliometrix</code> <span class="citation" data-cites="R-bibliometrix bibliometrix2017">(<a href="#ref-bibliometrix2017" role="doc-biblioref">Aria &amp; Cuccurullo, 2017</a>, <a href="#ref-R-bibliometrix" role="doc-biblioref">2025</a>)</span> packages.</p>
 <div class="cell">
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/massimoaria/pubmedR">pubmedR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.bibliometrix.org">bibliometrix</a></span><span class="op">)</span></span>
@@ -874,13 +874,13 @@ Aria, M. (2020). <em>pubmedR: Gathering metadata about publications, grants, cli
 Aria, M., &amp; Cuccurullo, C. (2017). Bibliometrix: An r-tool for comprehensive science mapping analysis. <em>Journal of Informetrics</em>. <a href="https://doi.org/10.1016/j.joi.2017.08.007">https://doi.org/10.1016/j.joi.2017.08.007</a>
 </div>
 <div id="ref-R-bibliometrix" class="csl-entry" role="listitem">
-Aria, M., &amp; Cuccurullo, C. (2024). <em>Bibliometrix: Comprehensive science mapping analysis</em>. Retrieved from <a href="https://www.bibliometrix.org">https://www.bibliometrix.org</a>
+Aria, M., &amp; Cuccurullo, C. (2025). <em>Bibliometrix: Comprehensive science mapping analysis</em>. Retrieved from <a href="https://www.bibliometrix.org">https://www.bibliometrix.org</a>
 </div>
 <div id="ref-R-rollama" class="csl-entry" role="listitem">
-Gruber, J. B., &amp; Weber, M. (2024). <em>Rollama: Communicate with ollama to run large language models locally</em>. Retrieved from <a href="https://jbgruber.github.io/rollama/">https://jbgruber.github.io/rollama/</a>
+Gruber, J. B., &amp; Weber, M. (2025). <em>Rollama: Communicate with ollama to run large language models locally</em>. Retrieved from <a href="https://jbgruber.github.io/rollama/">https://jbgruber.github.io/rollama/</a>
 </div>
 <div id="ref-R-ollamar" class="csl-entry" role="listitem">
-Lin, H., &amp; Safi, T. (2024). <em>Ollamar: Ollama language models</em>. Retrieved from <a href="https://hauselin.github.io/ollama-r/">https://hauselin.github.io/ollama-r/</a>
+Lin, H., &amp; Safi, T. (2025). <em>Ollamar: Ollama language models</em>. Retrieved from <a href="https://hauselin.github.io/ollama-r/">https://hauselin.github.io/ollama-r/</a>
 </div>
 <div id="ref-R-mall" class="csl-entry" role="listitem">
 Ruiz, E. (2024). <em>Mall: Run multiple large language model predictions against a table, or vectors</em>. Retrieved from <a href="https://mlverse.github.io/mall/">https://mlverse.github.io/mall/</a>
@@ -888,7 +888,7 @@ Ruiz, E. (2024). <em>Mall: Run multiple large language model predictions against
 </div>
 </section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
 <ol>
-<li id="fn1"><p><code>mall</code> relies on <code>ollamar</code> <span class="citation" data-cites="R-ollamar">(<a href="#ref-R-ollamar" role="doc-biblioref">Lin &amp; Safi, 2024</a>)</span>. You can see detailed <code>ollamar</code> code by including <code>preview = TRUE</code> option to <code>mall</code>’s functions.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p><code>mall</code> relies on <code>ollamar</code> <span class="citation" data-cites="R-ollamar">(<a href="#ref-R-ollamar" role="doc-biblioref">Lin &amp; Safi, 2025</a>)</span>. You can see detailed <code>ollamar</code> code by including <code>preview = TRUE</code> option to <code>mall</code>’s functions.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Hint: You can see how <code><a href="https://rdrr.io/pkg/mall/man/llm_translate.html">llm_translate()</a></code> does it by including <code>preview = TRUE</code> option.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -972,8 +972,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1084,7 +1082,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
