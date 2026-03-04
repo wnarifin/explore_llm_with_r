@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.8.25">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>3&nbsp; Text Generation – Exploring Large Language Models With R</title>
 <style>
@@ -18,8 +18,9 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -30,7 +31,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -82,15 +83,17 @@ div.csl-indent {
 <meta name="quarto:offset" content="./">
 <link href="./ch4.html" rel="next">
 <link href="./ch2.html" rel="prev">
-<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-97a305611cbfd25bbccc16d93f2db226.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-da7ceb9a644d987a66da8b2b9333945a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -119,7 +122,7 @@ div.csl-indent {
 }</script><link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 </head>
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
@@ -135,7 +138,9 @@ div.csl-indent {
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Exploring Large Language Models With R</a> 
     </div>
@@ -186,7 +191,7 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Text Classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Text and Image Classification</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -198,13 +203,13 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch8.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Fine-tuning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Tool Calling and Agents</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch9.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Miscellaneous Techniques</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Fine-tuning</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -270,29 +275,29 @@ div.csl-indent {
 <span class="header-section-number">3.1</span> Preliminaries</h2>
 <p>Load these packages,</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://jbgruber.github.io/rollama/">rollama</a></span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://jbgruber.github.io/rollama/">rollama</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/">purrr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/">tibble</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/">tibble</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Make sure that your Ollama is running,</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://jbgruber.github.io/rollama/reference/ping_ollama.html">ping_ollama</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># ensure it's running</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://jbgruber.github.io/rollama/reference/ping_ollama.html">ping_ollama</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># ensure it's running</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>▶ Ollama (v0.5.1) is running at &lt;http://localhost:11434&gt;!</code></pre>
+<pre><code>▶ Ollama (v0.15.1) is running at &lt;http://localhost:11434&gt;!</code></pre>
 </div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># list_models()$name #&gt; run this to view available models in your system</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># list_models()$name #&gt; run this to view available models in your system</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Give names to our buddies,</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">llama</span> <span class="op">=</span> <span class="st">"llama3.2:3b"</span></span>
-<span><span class="va">malay</span> <span class="op">=</span> <span class="st">"hf.co/RichardErkhov/mesolitica_-_malaysian-llama-3-8b-instruct-16k-gguf:Q4_K_M"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">llama</span> <span class="op">=</span> <span class="st">"llama3.2:3b"</span></span>
+<span><span class="va">malay</span> <span class="op">=</span> <span class="st">"hf.co/RichardErkhov/mesolitica_-_malaysian-llama-3-8b-instruct-16k-gguf:Q4_K_M"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section><section id="interpreting-statistical-results" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="interpreting-statistical-results">
 <span class="header-section-number">3.2</span> Interpreting Statistical Results</h2>
 <p>Run a linear regression using the multi-purpose dataset <code>mtcars</code>,</p>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm_model</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lm_model</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lm_model</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lm_model</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -316,27 +321,27 @@ F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10</code></pre>
 </div>
 <p>Save the output into a suitable text format,</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">text_data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lm_model</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/capture.output.html">capture.output</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span>collapse <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">text_data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lm_model</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/capture.output.html">capture.output</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span>collapse <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Put everything together nicely in a tibble,</p>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">q_text</span> <span class="op">=</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">q_text</span> <span class="op">=</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">role</span>,    <span class="op">~</span><span class="va">content</span>,</span>
 <span>  <span class="st">"system"</span>, <span class="st">"Interpret the statistical results from the given text:"</span>,</span>
 <span>  <span class="st">"user"</span>,   <span class="va">text_data</span></span>
 <span><span class="op">)</span></span>
-<span><span class="va">q_text</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">q_text</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["role"],"name":[1],"type":["chr"],"align":["left"]},{"label":["content"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"system","2":"Interpret the statistical results from the given text:"},{"1":"user","2":"\\nCall:\\nlm(formula = mtcars$mpg ~ mtcars$wt)\\n\\nResiduals:\\n    Min      1Q  Median      3Q     Max \\n-4.5432 -2.3647 -0.1252  1.4096  6.8727 \\n\\nCoefficients:\\n            Estimate Std. Error t value Pr(>|t|)    \\n(Intercept)  37.2851     1.8776  19.858  < 2e-16 ***\\nmtcars$wt    -5.3445     0.5591  -9.559 1.29e-10 ***\\n---\\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\\n\\nResidual standard error: 3.046 on 30 degrees of freedom\\nMultiple R-squared:  0.7528,\\tAdjusted R-squared:  0.7446 \\nF-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10\\n"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["role"],"name":[1],"type":["chr"],"align":["left"]},{"label":["content"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"system","2":"Interpret the statistical results from the given text:"},{"1":"user","2":"\\nCall:\\nlm(formula = mpg ~ wt, data = mtcars)\\n\\nResiduals:\\n    Min      1Q  Median      3Q     Max \\n-4.5432 -2.3647 -0.1252  1.4096  6.8727 \\n\\nCoefficients:\\n            Estimate Std. Error t value Pr(>|t|)    \\n(Intercept)  37.2851     1.8776  19.858  < 2e-16 ***\\nwt           -5.3445     0.5591  -9.559 1.29e-10 ***\\n---\\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\\n\\nResidual standard error: 3.046 on 30 degrees of freedom\\nMultiple R-squared:  0.7528,\\tAdjusted R-squared:  0.7446 \\nF-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10\\n"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
 <p>Query to interpret the statistical result,</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://jbgruber.github.io/rollama/reference/query.html">query</a></span><span class="op">(</span><span class="va">q_text</span>, <span class="va">llama</span>, output <span class="op">=</span> <span class="st">"text"</span>, screen <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://jbgruber.github.io/rollama/reference/query.html">query</a></span><span class="op">(</span><span class="va">q_text</span>, <span class="va">llama</span>, output <span class="op">=</span> <span class="st">"text"</span>, screen <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -381,23 +386,23 @@ The linear regression model provides a good fit to the data, indicating that `mp
 <span class="header-section-number">3.3.1</span> English</h3>
 <p>Write the LLM role and user query,</p>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">system_instruction</span> <span class="op">=</span> <span class="st">"</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">system_instruction</span> <span class="op">=</span> <span class="st">"</span></span>
 <span><span class="st">You are an expert in public health. Currently you are tasked to write questions </span></span>
 <span><span class="st">according to given query. Give answers to each question. Take into account </span></span>
 <span><span class="st">target population of the questions.</span></span>
 <span><span class="st">"</span></span>
 <span><span class="va">user_query</span> <span class="op">=</span> <span class="st">"</span></span>
 <span><span class="st">Write 10 knoweldge questions about malaria for general public with low education level.</span></span>
-<span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Combine these in a tibble,</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">q_text</span> <span class="op">=</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">q_text</span> <span class="op">=</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">role</span>,    <span class="op">~</span><span class="va">content</span>,</span>
 <span>  <span class="st">"system"</span>, <span class="va">system_instruction</span>,</span>
 <span>  <span class="st">"user"</span>,   <span class="va">user_query</span></span>
 <span><span class="op">)</span></span>
-<span><span class="va">q_text</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">q_text</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -408,7 +413,7 @@ The linear regression model provides a good fit to the data, indicating that `mp
 </div>
 <p>Ask the LLM. Look at Question 2, what’s wrong? That’s why we must evaluate texts given by LLM carefully.</p>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://jbgruber.github.io/rollama/reference/query.html">query</a></span><span class="op">(</span><span class="va">q_text</span>, <span class="va">llama</span>, output <span class="op">=</span> <span class="st">"text"</span>, screen <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://jbgruber.github.io/rollama/reference/query.html">query</a></span><span class="op">(</span><span class="va">q_text</span>, <span class="va">llama</span>, output <span class="op">=</span> <span class="st">"text"</span>, screen <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -499,23 +504,23 @@ Answer: d) All of the above, especially those living in tropical and subtropical
 <span class="header-section-number">3.3.2</span> Malay</h3>
 <p>Write the LLM role and user query,</p>
 <div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">system_instruction</span> <span class="op">=</span> <span class="st">"</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">system_instruction</span> <span class="op">=</span> <span class="st">"</span></span>
 <span><span class="st">Anda pakar dalam kesihatan awam. Anda ditugaskan untuk menulis soalan. </span></span>
 <span><span class="st">Beri jawapan kepada setiap soalan yang anda tulis. Ambil kira populasi sasaran soalan.</span></span>
 <span><span class="st">"</span></span>
 <span><span class="va">user_query</span> <span class="op">=</span> <span class="st">"</span></span>
 <span><span class="st">Tulis 10 soalan pengetahuan tentang demam denggi untuk orang awam.</span></span>
-<span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>At the moment, for this Malaysian LLM, you need to simplify the instructions as it is still in its early stages. Note that the model understands English because it is based on LLama 3 (note the model’s name). You may also explore the MaLLaM model (<a href="https://mesolitica.com/mallam" class="uri">https://mesolitica.com/mallam</a>).</p>
 <p>Combine these in a tibble,</p>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">q_text</span> <span class="op">=</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">q_text</span> <span class="op">=</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">role</span>,    <span class="op">~</span><span class="va">content</span>,</span>
 <span>  <span class="st">"system"</span>, <span class="va">system_instruction</span>,</span>
 <span>  <span class="st">"user"</span>,   <span class="va">user_query</span></span>
 <span><span class="op">)</span></span>
-<span><span class="va">q_text</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">q_text</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -526,7 +531,7 @@ Answer: d) All of the above, especially those living in tropical and subtropical
 </div>
 <p>Ask the Malaysian LLM <code>hf.co/RichardErkhov/mesolitica_-_malaysian-llama-3-8b-instruct-16k-gguf:Q4_K_M</code>,</p>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://jbgruber.github.io/rollama/reference/query.html">query</a></span><span class="op">(</span><span class="va">q_text</span>, <span class="va">malay</span>, output <span class="op">=</span> <span class="st">"text"</span>, screen <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://jbgruber.github.io/rollama/reference/query.html">query</a></span><span class="op">(</span><span class="va">q_text</span>, <span class="va">malay</span>, output <span class="op">=</span> <span class="st">"text"</span>, screen <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -569,14 +574,14 @@ Saya harap jawapan ini membantu! Jika anda memerlukan maklumat lanjut, sila beri
 <span class="header-section-number">3.4</span> R Coding</h2>
 <p>Specify your coding problem,</p>
 <div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">q_text</span> <span class="op">=</span> <span class="st">"</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">q_text</span> <span class="op">=</span> <span class="st">"</span></span>
 <span><span class="st">Show how to perform a logistic regression analysis in R programming language.</span></span>
-<span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Ask for help. Here we try a larger model, <code>qwen2.5-coder</code>, a 7B model.</p>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">coder</span> <span class="op">=</span> <span class="st">"qwen2.5-coder:7b"</span></span>
-<span><span class="fu"><a href="https://jbgruber.github.io/rollama/reference/query.html">query</a></span><span class="op">(</span><span class="va">q_text</span>, <span class="va">coder</span>, output <span class="op">=</span> <span class="st">"text"</span>, screen <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">coder</span> <span class="op">=</span> <span class="st">"qwen2.5-coder:7b"</span></span>
+<span><span class="fu"><a href="https://jbgruber.github.io/rollama/reference/query.html">query</a></span><span class="op">(</span><span class="va">q_text</span>, <span class="va">coder</span>, output <span class="op">=</span> <span class="st">"text"</span>, screen <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -615,7 +620,7 @@ In case the assumptions are not met, you might need to consider using a differen
 <span class="header-section-number">3.5</span> Reference Formatter</h2>
 <p>References can be converted from one referencing format to another. Here, we have several references to be formatted (taken from <a href="https://doi.org/10.1016/j.gore.2022.101024" class="uri">https://doi.org/10.1016/j.gore.2022.101024</a>),</p>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">refs</span> <span class="op">=</span> <span class="st">"</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">refs</span> <span class="op">=</span> <span class="st">"</span></span>
 <span><span class="st">Bekkers, S., Bot, A.G., Makarawung, D., et al., 2014. The National Hospital Discharge</span></span>
 <span><span class="st">Survey and Nationwide Inpatient Sample: the databases used affect results in THA</span></span>
 <span><span class="st">research. Clin. Orthop. Relat. Res. 472, 3441–3449.</span></span>
@@ -633,16 +638,16 @@ In case the assumptions are not met, you might need to consider using a differen
 <span><span class="st">economic evaluation reporting standards 2022 (CHEERS 2022) statement: updated</span></span>
 <span><span class="st">reporting guidance for health economic evaluations. Int. J. Technol. Assess. Health</span></span>
 <span><span class="st">Care. 38 (1).</span></span>
-<span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Place everything together nicely in a tibble,</p>
 <div class="cell">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">q_text</span> <span class="op">=</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">q_text</span> <span class="op">=</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">role</span>,    <span class="op">~</span><span class="va">content</span>,</span>
 <span>  <span class="st">"system"</span>, <span class="st">"Convert the given references in APA 7 format. Do not comment or elaborate."</span>,</span>
 <span>  <span class="st">"user"</span>,   <span class="va">refs</span></span>
 <span><span class="op">)</span></span>
-<span><span class="va">q_text</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">q_text</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -653,16 +658,16 @@ In case the assumptions are not met, you might need to consider using a differen
 </div>
 <p>Ask it to do the job,</p>
 <div class="cell">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://jbgruber.github.io/rollama/reference/query.html">query</a></span><span class="op">(</span><span class="va">q_text</span>, <span class="va">llama</span>, output <span class="op">=</span> <span class="st">"text"</span>, screen <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>      model_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>num_ctx <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://jbgruber.github.io/rollama/reference/query.html">query</a></span><span class="op">(</span><span class="va">q_text</span>, <span class="va">llama</span>, output <span class="op">=</span> <span class="st">"text"</span>, screen <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>      model_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>num_ctx <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Bekkers, S., Bot, A. G., Makarawung, D., et al., (2023, December). The National Hospital Discharge Survey and Nationwide Inpatient Sample: the databases used affect results in Total Hip Arthroplasty research. Journal of Orthopaedic Research, 472(10), 3441–3449.
+<pre><code>Bekkers, S., Bot, A. G., Makarawung, D., et al. (2014). The National Hospital Discharge Survey and Nationwide Inpatient Sample: the databases used affect results in THA research. Clinical Orthopaedics and Related Research, 472, 3441–3449.
 
-Chubak, J., Ziebell, R., Greenlee, R. T., Honda, S., et al., (2022). The Cancer Research Network: a platform for epidemiologic and health services research on cancer prevention, care, and outcomes in large, stable populations. Cancer Causes Control, 27(10), 1315–1323.
+Chubak, J., Ziebell, R., Greenlee, R. T., Honda, S., et al. (2016). The Cancer Research Network: a platform for epidemiologic and health services research on cancer prevention, care, and outcomes in large, stable populations. Cancer Causes Control, 27(11), 1315–1323.
 
-Dreyer, N. A., Tunis, S. R., Berger, M., Ollendorf, D., Mattox, P., Gliklich, R., (2020). Why observational studies should be among the tools used in comparative effectiveness research. Health Affairs, 39(10), 1818–1825.
+Dreyer, N. A., Tunis, S. R., Berger, M., Ollendorf, D., Mattox, P., Gliklich, R. (2010). Why observational studies should be among the tools used in comparative effectiveness research. Health Affairs, 29(10), 1818–1825.
 
-Husereau, D., Drummond, M., Augustovski, F., et al., (2023). Consolidated health economic evaluation reporting standards 2022 (CHEERS 2022) statement: updated reporting guidance for health economic evaluations. International Journal of Technology Assessment in Health Care, 39(1), e123–e134.</code></pre>
+Husereau, D., Drummond, M., Augustovski, F., et al. (2022). Consolidated health economic evaluation reporting standards 2022 (CHEERS 2022) statement: updated reporting guidance for health economic evaluations. International Journal of Technology Assessment in Health Care, 38(1).</code></pre>
 </div>
 </div>
 <p>Here we increase the context window to 2000. <em>Context window/size</em> is number of tokens that can be LLM can receive/produce as input/output. It is around 3/2 times words in a given text. Please ask your LLM companion for more information about it :-)</p>
@@ -670,84 +675,86 @@ Husereau, D., Drummond, M., Augustovski, F., et al., (2023). Consolidated health
 <span class="header-section-number">3.6</span> Summarizing Abstracts From PubMed</h2>
 <p>Get abstract from PubMed on <em>Partial verification bias</em> from year 2020 until 2025. This requires <code>pubmedR</code> <span class="citation" data-cites="R-pubmedR">(<a href="#ref-R-pubmedR" role="doc-biblioref">Aria, 2020</a>)</span> and <code>bibliometrix</code> <span class="citation" data-cites="R-bibliometrix bibliometrix2017">(<a href="#ref-bibliometrix2017" role="doc-biblioref">Aria &amp; Cuccurullo, 2017</a>, <a href="#ref-R-bibliometrix" role="doc-biblioref">2025</a>)</span> packages.</p>
 <div class="cell">
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/massimoaria/pubmedR">pubmedR</a></span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/massimoaria/pubmedR">pubmedR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.bibliometrix.org">bibliometrix</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://stringr.tidyverse.org">stringr</a></span><span class="op">)</span></span>
 <span><span class="va">api_key</span> <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="va">query_pvb</span> <span class="op">=</span> <span class="st">"partial verification bias*[Title/Abstract] AND english[LA] AND Journal Article[PT] AND 2020:2025[DP]"</span></span>
 <span><span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/pubmedR/man/pmQueryTotalCount.html">pmQueryTotalCount</a></span><span class="op">(</span>query <span class="op">=</span> <span class="va">query_pvb</span>, api_key <span class="op">=</span> <span class="va">api_key</span><span class="op">)</span></span>
-<span><span class="va">D</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/pubmedR/man/pmApiRequest.html">pmApiRequest</a></span><span class="op">(</span>query <span class="op">=</span> <span class="va">query_pvb</span>, limit <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">total_count</span>, api_key <span class="op">=</span> <span class="va">api_key</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">D</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/pubmedR/man/pmApiRequest.html">pmApiRequest</a></span><span class="op">(</span>query <span class="op">=</span> <span class="va">query_pvb</span>, limit <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">total_count</span>, api_key <span class="op">=</span> <span class="va">api_key</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Documents  14  of  14 </code></pre>
+<pre><code>Documents  15  of  15 </code></pre>
 </div>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">M</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/bibliometrix/man/convert2df.html">convert2df</a></span><span class="op">(</span><span class="va">D</span>, dbsource <span class="op">=</span> <span class="st">"pubmed"</span>, format <span class="op">=</span> <span class="st">"api"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">M</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/bibliometrix/man/convert2df.html">convert2df</a></span><span class="op">(</span><span class="va">D</span>, dbsource <span class="op">=</span> <span class="st">"pubmed"</span>, format <span class="op">=</span> <span class="st">"api"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Converting your pubmed collection into a bibliographic dataframe
 
-=============================================================================
+================================================================================
 Done!</code></pre>
 </div>
 </div>
 <p>Save relevant abstracts in <code>text_abs</code>. We may flatten the abstracts into a single text string, <code>text_abs_flat</code>,</p>
 <div class="cell">
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">key</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">"PARTIAL VERIFICATION BIAS"</span>, <span class="va">M</span><span class="op">$</span><span class="va">TI</span><span class="op">)</span>  <span class="co"># Select abstract with "partial verification bias"</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">key</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">"PARTIAL VERIFICATION BIAS"</span>, <span class="va">M</span><span class="op">$</span><span class="va">TI</span><span class="op">)</span>  <span class="co"># Select abstract with "partial verification bias"</span></span>
 <span><span class="va">text_abs</span> <span class="op">=</span> <span class="va">M</span><span class="op">$</span><span class="va">AB</span><span class="op">[</span><span class="va">key</span><span class="op">]</span></span>
-<span><span class="va">text_abs_flat</span> <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_flatten.html">str_flatten</a></span><span class="op">(</span><span class="va">M</span><span class="op">$</span><span class="va">AB</span><span class="op">[</span><span class="va">key</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">text_abs_flat</span> <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_flatten.html">str_flatten</a></span><span class="op">(</span><span class="va">M</span><span class="op">$</span><span class="va">AB</span><span class="op">[</span><span class="va">key</span><span class="op">]</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Estimate the context size required by the LLM model,</p>
 <div class="cell">
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ctx</span> <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_length.html">str_length</a></span><span class="op">(</span><span class="va">text_abs_flat</span><span class="op">)</span> <span class="op">*</span> <span class="fl">3</span> <span class="op">/</span> <span class="fl">2</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ctx</span> <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_length.html">str_length</a></span><span class="op">(</span><span class="va">text_abs_flat</span><span class="op">)</span> <span class="op">*</span> <span class="fl">3</span> <span class="op">/</span> <span class="fl">2</span></span>
 <span><span class="va">ctx</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">ctx</span>, <span class="op">-</span><span class="fl">3</span><span class="op">)</span>  <span class="co"># with large ctx, be careful with VRAM use</span></span>
-<span><span class="va">ctx</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">ctx</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5000</code></pre>
 </div>
 </div>
 <p>Setup the query in a tibble,</p>
 <div class="cell">
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">q_text</span> <span class="op">=</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">q_text</span> <span class="op">=</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">role</span>, <span class="op">~</span><span class="va">content</span>,</span>
 <span>  <span class="st">"system"</span>, <span class="st">"Summarize the content of the given text."</span>,</span>
 <span>  <span class="st">"user"</span>, <span class="va">text_abs_flat</span>,</span>
-<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>and get the result,</p>
 <div class="cell">
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://jbgruber.github.io/rollama/reference/query.html">query</a></span><span class="op">(</span><span class="va">q_text</span>, <span class="va">llama</span>, output <span class="op">=</span> <span class="st">"text"</span>, screen <span class="op">=</span> <span class="cn">FALSE</span>, </span>
-<span>      model_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>num_ctx <span class="op">=</span> <span class="va">ctx</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://jbgruber.github.io/rollama/reference/query.html">query</a></span><span class="op">(</span><span class="va">q_text</span>, <span class="va">llama</span>, output <span class="op">=</span> <span class="st">"text"</span>, screen <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>      model_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>num_ctx <span class="op">=</span> <span class="va">ctx</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>The text discusses the importance of evaluating new diagnostic tests in medical care, particularly when it comes to accuracy measures such as sensitivity (SN) and specificity (SP). However, these measures can be biased due to a phenomenon called partial verification bias (PVB), where only certain patients are verified.
+<pre><code>The text discusses the importance of evaluating new diagnostic tests in medical care, specifically the accuracy studies that compare these tests to gold standard tests. However, traditional accuracy measures (sensitivity and specificity) can be biased due to "partial verification bias" (PVB), where selective verification of patients occurs.
 
-To address this issue, the article introduces Inverse Probability Bootstrapping (IPB) sampling as a method to correct for PVB. IPB is adapted for use in correcting PVB and tested on simulated and clinical data sets. The results show that IPB is accurate for estimating SN and SP, but less precise than existing methods.
+To address this issue, the authors investigated the utility of Inverse Probability Bootstrapping (IPB) sampling in correcting PVB. They developed an adapted method for IPB and tested it using simulated and clinical data sets, comparing its results to existing methods.
 
-The article also discusses alternative approaches to avoiding PVB, such as applying the reference standard to all individuals who are positive on the index test and a random sample of those who are negative. It highlights the need for further research to reduce the standard error (SE) of IPB.
+The study found that IPB is accurate for estimating sensitivity and specificity but less precise than existing methods, with a higher standard error. Despite this limitation, the authors recommend using IPB when subsequent analysis with full data analytic methods is expected.
 
-Overall, the text emphasizes the importance of thoroughly evaluating new diagnostic tests in medical care, particularly when it comes to accuracy measures, and discusses various methods available to correct for PVB.</code></pre>
+The article also discusses alternative sampling frames to avoid PVB, including applying the reference standard to all patients who test positive on the index test and a random sample of those who are negative.
+
+Overall, the text highlights the need for thorough evaluation of new diagnostic tests in medical care, particularly when considering accuracy measures that can be biased by selective verification of patients.</code></pre>
 </div>
 </div>
 <p>You will notice that it refers to “an article” because we combined the abstracts in a single text.</p>
-<p>And we may try using <code><a href="https://rdrr.io/pkg/mall/man/llm_summarize.html">llm_vec_summarize()</a></code> from <code>mall</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> package <span class="citation" data-cites="R-mall">(<a href="#ref-R-mall" role="doc-biblioref">Ruiz, 2024</a>)</span> to summarize each abstract in 20 words or less,</p>
+<p>And we may try using <code><a href="https://rdrr.io/pkg/mall/man/llm_summarize.html">llm_vec_summarize()</a></code> from <code>mall</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> package <span class="citation" data-cites="R-mall">(<a href="#ref-R-mall" role="doc-biblioref">Ruiz, 2025</a>)</span> to summarize each abstract in 20 words or less,</p>
 <div class="cell">
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mlverse.github.io/mall/">mall</a></span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mlverse.github.io/mall/">mall</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/mall/man/llm_use.html">llm_use</a></span><span class="op">(</span><span class="st">"ollama"</span>, <span class="va">llama</span>, .silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/mall/man/llm_summarize.html">llm_vec_summarize</a></span><span class="op">(</span><span class="va">text_abs</span>, max_words <span class="op">=</span> <span class="st">"20"</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">text_abs_summ</span></span>
-<span><span class="va">text_abs_summ</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">text_abs_summ</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "ipb is accurate for sn and sp estimation with low bias but less precise than existing methods with higher se."                    
-[2] "partial verification bias occurs when a positive index test makes application of the reference standard more likely."             
-[3] "new diagnostic tests undergo evaluation comparing to gold standard tests with accuracy measures like sensitivity and specificity."</code></pre>
+<pre><code>[1] "ipb is a general method to correct sampling bias in model-based analysis and produces debiased data for analysis."                              
+[2] "partially verifying bias occurs when applying reference standard to positive index test group is more likely than negative group"               
+[3] "new diagnostic tests are evaluated in comparison with gold standard tests and quantified by accuracy measures like sensitivity and specificity."</code></pre>
 </div>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">text_abs_summ</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split</a></span><span class="op">(</span><span class="st">" "</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">length</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">text_abs_summ</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split</a></span><span class="op">(</span><span class="st">" "</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">length</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 20 17 17</code></pre>
+<pre><code>[1] 18 19 20</code></pre>
 </div>
 </div>
 </section><section id="extracting-information" class="level2" data-number="3.7"><h2 data-number="3.7" class="anchored" data-anchor-id="extracting-information">
 <span class="header-section-number">3.7</span> Extracting Information</h2>
 <p>We can extract relevant information from a given text. As an example, I provide it with an announcement for a recent webinar,</p>
 <div class="cell">
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">webinar_text</span> <span class="op">=</span> <span class="st">"</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">webinar_text</span> <span class="op">=</span> <span class="st">"</span></span>
 <span><span class="st">Topic: Easy Data Exploration and Visualization using GWalkR Package in R</span></span>
 <span><span class="st">Date: 18 January 2025</span></span>
 <span><span class="st">Time: 9.00pm </span></span>
@@ -756,10 +763,10 @@ Overall, the text emphasizes the importance of thoroughly evaluating new diagnos
 <span><span class="st">Organized by the Malaysian Disease Modelling Expert Group (MDMEG)</span></span>
 <span><span class="st">"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/mall/man/llm_use.html">llm_use</a></span><span class="op">(</span><span class="st">"ollama"</span>, <span class="st">"gemma2:2b"</span>, .silent <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="fl">111</span><span class="op">)</span>  <span class="co"># using smaller model; gemma2:2b</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/mall/man/llm_extract.html">llm_vec_extract</a></span><span class="op">(</span><span class="va">webinar_text</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"title"</span>, <span class="st">"date"</span>, <span class="st">"time"</span>, <span class="st">"place"</span>, <span class="st">"organizer"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/mall/man/llm_extract.html">llm_vec_extract</a></span><span class="op">(</span><span class="va">webinar_text</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"title"</span>, <span class="st">"date"</span>, <span class="st">"time"</span>, <span class="st">"place"</span>, <span class="st">"organizer"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>title|date|time|place|organizer
-easy data exploration and visualization using gwalkr package in r|january 18, 2025|9:00pm|webex|malasian disease modelling expert group (mdmeg) </code></pre>
+walkr|january 18, 2025|9:00pm|webex|malasian disease modelling expert group  (mdmeg) </code></pre>
 </div>
 </div>
 <p>Notice that, although we uses the words “title” and “place” instead of “topic” and “platform”, it could still understand these terms. I also used <code>seed = 111</code>, because I was satisfied with the given response using this seed number. You may try with other seed numbers and see the changes in the responses.</p>
@@ -767,14 +774,14 @@ easy data exploration and visualization using gwalkr package in r|january 18, 20
 <span class="header-section-number">3.8</span> Translation</h2>
 <p>We can try the <code><a href="https://rdrr.io/pkg/mall/man/llm_translate.html">llm_vec_translate()</a></code> (or <code><a href="https://rdrr.io/pkg/mall/man/llm_translate.html">llm_translate()</a></code> if your input is a data frame or tibble) from <code>mall</code>. Here, we translate the first abstract from English to Malay,</p>
 <div class="cell">
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">text_abs</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="co"># English text</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">text_abs</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="co"># English text</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "IN MEDICAL CARE, IT IS IMPORTANT TO EVALUATE ANY NEW DIAGNOSTIC TEST IN THE FORM OF DIAGNOSTIC ACCURACY STUDIES. THESE NEW TESTS ARE COMPARED TO GOLD STANDARD TESTS, WHERE THE PERFORMANCE OF BINARY DIAGNOSTIC TESTS IS USUALLY MEASURED BY SENSITIVITY (SN) AND SPECIFICITY (SP). HOWEVER, THESE ACCURACY MEASURES ARE OFTEN BIASED OWING TO SELECTIVE VERIFICATION OF THE PATIENTS, KNOWN AS PARTIAL VERIFICATION BIAS (PVB). INVERSE PROBABILITY BOOTSTRAP (IPB) SAMPLING IS A GENERAL METHOD TO CORRECT SAMPLING BIAS IN MODEL-BASED ANALYSIS AND PRODUCES DEBIASED DATA FOR ANALYSIS. HOWEVER, ITS UTILITY IN PVB CORRECTION HAS NOT BEEN INVESTIGATED BEFORE. THE OBJECTIVE OF THIS STUDY WAS TO INVESTIGATE IPB IN THE CONTEXT OF PVB CORRECTION UNDER THE MISSING-AT-RANDOM ASSUMPTION FOR BINARY DIAGNOSTIC TESTS. IPB WAS ADAPTED FOR PVB CORRECTION, AND TESTED AND COMPARED WITH EXISTING METHODS USING SIMULATED AND CLINICAL DATA SETS. THE RESULTS INDICATED THAT IPB IS ACCURATE FOR SN AND SP ESTIMATION AS IT SHOWED LOW BIAS. HOWEVER, IPB WAS LESS PRECISE THAN EXISTING METHODS AS INDICATED BY THE HIGHER STANDARD ERROR (SE). DESPITE THIS ISSUE, IT IS RECOMMENDED TO USE IPB WHEN SUBSEQUENT ANALYSIS WITH FULL DATA ANALYTIC METHODS IS EXPECTED. FURTHER STUDIES MUST BE CONDUCTED TO REDUCE THE SE."</code></pre>
 </div>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mall/man/llm_use.html">llm_use</a></span><span class="op">(</span><span class="st">"ollama"</span>, <span class="va">malay</span>, .silent <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/mall/man/llm_translate.html">llm_vec_translate</a></span><span class="op">(</span><span class="va">text_abs</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, language <span class="op">=</span> <span class="st">"Malay"</span><span class="op">)</span>  <span class="co"># Malay text</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mall/man/llm_use.html">llm_use</a></span><span class="op">(</span><span class="st">"ollama"</span>, <span class="va">malay</span>, .silent <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/mall/man/llm_translate.html">llm_vec_translate</a></span><span class="op">(</span><span class="va">text_abs</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, language <span class="op">=</span> <span class="st">"Malay"</span><span class="op">)</span>  <span class="co"># Malay text</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Dalam penjagaan kesihatan, adalah penting untuk menilai sebarang ujian diagnostik baharu menggunakan kajian ketepatan diagnostik. Ujian ini dibandingkan dengan ujian standard emas, di mana prestasi ujian diagnostik binari biasanya diukur oleh kepekaan (SN) dan kekhususan (SP). Walau bagaimanapun, ukuran ketepatan ini sering berat sebelah kerana pengesahan terpilih pesakit, yang dikenali sebagai bias pengesahan separa (PVB). Pemampatan butstrap kebarangkalian songsang (IPB) ialah kaedah umum untuk membetulkan berat sebelah pensampelan dalam analisis berasaskan model dan menghasilkan data berat sebelah untuk dianalisis. Walau bagaimanapun, penggunaannya dalam pembetulan PVB belum disiasat sebelum ini. Objektif kajian adalah untuk menyiasat IPB dalam konteks pembetulan PVB di bawah andaian hilang rawak untuk ujian diagnostik binari. IPB telah disesuaikan untuk pembetulan PVB dan diuji serta dibandingkan dengan kaedah sedia ada menggunakan set data simulasi dan klinikal. Keputusan menunjukkan bahawa IPB adalah tepat untuk anggaran SN dan SP kerana ia mempamerkan berat sebelah yang rendah. Walau bagaimanapun, IPB kurang tepat daripada kaedah sedia ada seperti yang ditunjukkan oleh ralat piawai (SE) yang lebih tinggi. Walaupun isu ini, disyorkan untuk menggunakan IPB apabila analisis susulan dengan kaedah analitik data penuh dijangka. Kajian lanjut perlu dilakukan untuk mengurangkan SE."</code></pre>
+<pre><code>[1] "Anda adalah enjin bantuan yang berguna. Anda akan mengembalikan hanya teks terjemahan, tiada penjelasan. Bahasa sasaran untuk diterjemahkan ialah: Bahasa Melayu. Jawapan berdasarkan teks berikut:\nDALAM PENJAGAAN PERUBATAN, ADALAH PENTING UNTUK MENILAI UJIAN DIAGNOSTIK BARU DALAM BENTUK KAJIAN KEAKURAN DIAGNOSTIK. UJIAN- UJIAN INI DIBANDINGKAN DENGAN UJIAN STANDARD EMAS, DI MANA PRESTASI UJIAN DIAGNOSTIK BINARI SERING DIUKUR OLEH KEPEKAAN (SN) DAN KEKHASAN (SP). WALAU BAGAIMANAPUN, UKURAN KETEPATAN INI SERING DIPENGARUHI OLEH VERIFIKASI SELEKTIF PESAKIT, YANG DIKENALI SEBAGAI BIASE VERIFIKASI PARTIAL (PVB). SAMPLING PROBABILITI TERBALIK (IPB) ADALAH KAEDAH UMUM UNTUK MENGUBAH KETIDAKSEIMBANGAN PENSAMPELAN DALAM ANALISIS BERASASKAN MODEL DAN MENYEDIAKAN DATA BERBIASED UNTUK ANALISIS. WALAUPUN KELEMAHANNYA, UTILITI IPB DALAM PEMBAIKIAN PVB TIDAK PERNAH DIKENDALIKAN SEBELUM INI. OBJEKTIF KAJIAN INI ADALAH UNTUK MENYIASAT IPB DALAM KONTEKS PEMBAIKIAN PVB DENGAN ANDAISAN KEHILANGAN-PADA-RANDOM BAGI UJIAN DIAGNOSTIK BINARI. IPB DISESUAikan untuk PEMBAIKIAN PVB, dan DIUJI DAN DIBANDINGKAN dengan KAEDAH SEDIA ADA MENGGUNAKAN SET DATA SIMULASI DAN KLINIKAL. KEPUTUSAN MENUNJUKKAN BAHAWA IPB ADALAH AKUR UNTUK ANGGARAN SN dan SP SEBAGAI Ia menunjukkan BIASE RENDAH. WALAU BAGAIMANAPUN, IPB KURANG PRECISE BERBANDING KAEDAH SEDIA ADA SEPERTI YANG DINYATAKAN OLEH RALAT STANDARD (SE) yang lebih tinggi. Walaupun ISU ini, adalah disyorkan untuk menggunakan IPB apabila ANALISIS LEBIH LANJUT dengan KADAR DATA ANALITIK penuh dijangka. KAJIAN SELANJUTNYA mesti DIJALANKAN UNTUK MENGURANGKAN SE."</code></pre>
 </div>
 </div>
 <p>You can try to replicate this using <code>rollama</code>’s <code><a href="https://jbgruber.github.io/rollama/reference/query.html">query()</a></code> function.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
@@ -782,15 +789,15 @@ easy data exploration and visualization using gwalkr package in r|january 18, 20
 <span class="header-section-number">3.9</span> Querying Multiple Local LLMs</h2>
 <p>You can easily send a query to multiple LLMs at once in <code>rollama</code>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">q_text</span> <span class="op">=</span> <span class="st">"Provide a brief description of hypertension."</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">q_text</span> <span class="op">=</span> <span class="st">"Provide a brief description of hypertension."</span></span>
 <span><span class="va">q_response</span> <span class="op">=</span> <span class="fu"><a href="https://jbgruber.github.io/rollama/reference/query.html">query</a></span><span class="op">(</span><span class="va">q_text</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">llama</span>, <span class="st">"gemma2:2b"</span>, <span class="st">"phi3:3.8b"</span>, <span class="st">"mistral:7b"</span><span class="op">)</span>,</span>
 <span>                   output <span class="op">=</span> <span class="st">"data.frame"</span>, screen <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>                   model_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">q_response</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">q_response</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["model"],"name":[1],"type":["chr"],"align":["left"]},{"label":["role"],"name":[2],"type":["chr"],"align":["left"]},{"label":["response"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"llama3.2:3b","2":"assistant","3":"Hypertension, also known as high blood pressure, is a medical condition in which the force of blood against the artery walls is consistently too high. It can lead to damage and strain on the heart, kidneys, brain, and other vital organs.\\n\\nNormally, when the heart beats, it pumps blood into the arteries, causing them to constrict (or narrow) slightly. As the heart relaxes, the arteries dilate (or widen), allowing fresh blood to flow in. In people with hypertension, this process is disrupted, leading to:\\n\\n1. Arteries that remain permanently narrowed or constricted.\\n2. Blood vessels that are stiff and less able to stretch.\\n\\nHigh blood pressure increases the risk of various health problems, including heart attack, stroke, kidney disease, and vision loss. It can also lead to organ damage over time if left untreated.\\n\\nHypertension is often asymptomatic, making it crucial for people with high blood pressure to monitor their condition regularly through regular check-ups and at-home blood pressure monitoring."},{"1":"gemma2:2b","2":"assistant","3":"Hypertension, also known as high blood pressure, is a condition where the force of your blood against your artery walls is consistently too high.  \\n\\n**Here's a simplified breakdown:**\\n\\n* **High Blood Pressure (BP):** Imagine a hose with water flowing through it. In hypertensive people, the water pressure in the hose (blood) is too high, causing strain on the walls and potentially leading to problems. \\n* **Causes:**  Many factors contribute to hypertension, including genetics, lifestyle choices (diet, exercise), stress, and underlying medical conditions like diabetes or kidney disease.\\n* **Consequences:** Uncontrolled hypertension damages blood vessels over time, increasing risk of heart attack, stroke, vision loss, and other serious health problems. \\n\\n**It's important to note that:**  Hypertension can be silent in early stages, so regular checkups are crucial. \\n\\n\\nIf you have concerns about your blood pressure, please consult a healthcare professional for accurate diagnosis and guidance.\\n"},{"1":"phi3:3.8b","2":"assistant","3":"Hypertension, also known as high blood pressure, is a common condition in which the force against your artery walls is consistently too high. This can lead to health problems such as heart disease and stroke if not managed properly. There are two types: primary (essential) hypertension, often caused by factors like genetics or lifestyle; and secondary hypertension due to an underlying condition that affects the kidneys, arteries, heart, or endocrine system. It is typically asymptomatic but can be detected through routine screening."},{"1":"mistral:7b","2":"assistant","3":"Hypertension, also known as high blood pressure, is a long-term medical condition in which the force of blood against the walls of arteries is consistently too high. This pressure causes the heart to work harder than normal to pump blood throughout the body, potentially leading to health problems such as heart disease, stroke, kidney failure, and other complications if left untreated. Hypertension is typically categorized as either primary (essential) hypertension or secondary hypertension, with primary being more common and having no identifiable underlying cause, while secondary hypertension is caused by an underlying condition such as kidney problems, tumors, or certain medications."}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["model"],"name":[1],"type":["chr"],"align":["left"]},{"label":["role"],"name":[2],"type":["chr"],"align":["left"]},{"label":["response"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"llama3.2:3b","2":"assistant","3":"Hypertension, also known as high blood pressure, is a medical condition in which the force of blood against the walls of the arteries is consistently too high. It can lead to damage to the cardiovascular system, including the heart, kidneys, and blood vessels.\\n\\nIn healthy individuals, blood pressure varies throughout the day, with a normal reading typically ranging from 90/60 mmHg to 120/80 mmHg. In people with hypertension, their blood pressure remains elevated, often above 140/90 mmHg or 180/120 mmHg in severe cases.\\n\\nHigh blood pressure is a major risk factor for various health problems, including:\\n\\n1. Heart attack and stroke\\n2. Kidney disease and failure\\n3. Vision loss and blindness\\n4. Peripheral artery disease\\n\\nUntreated hypertension can lead to long-term damage and even death. Managing blood pressure through lifestyle changes, such as diet, exercise, and stress reduction, or medication can help prevent these complications."},{"1":"gemma2:2b","2":"assistant","3":"Hypertension, also known as high blood pressure, is a condition where the force of your blood against your artery walls is consistently too high.  \\n\\n**Here's a simplified breakdown:**\\n\\n* **Normal Blood Pressure:** Less than 120/80 mmHg (systolic/diastolic)\\n* **Hypertension:** Systolic above 140 mmHg or diastolic above 90 mmHg\\n* **Causes:** Genetics, unhealthy lifestyle choices (diet, exercise, smoking), stress, and underlying medical conditions.\\n\\n**Consequences of untreated hypertension can lead to serious health problems such as:**\\n\\n* Heart attack\\n* Stroke\\n* Kidney failure\\n* Vision loss\\n* Aortic aneurysms \\n\\n\\nIt's important to monitor your blood pressure regularly and speak with a healthcare professional if you have concerns. \\n"},{"1":"phi3:3.8b","2":"assistant","3":"Hypertension, also known as high blood pressure, is a common condition in which the force of the blood against artery walls is consistently too high. This can lead to health problems such as heart disease and stroke if not managed properly. Factors contributing to hypertension include genetics, unhealthy lifestyle habits (such as poor diet, lack of exercise, excessive alcohol consumption), stress, and underlying conditions like kidney diseases or hormonal disorders. It's often called the \"silent killer\" because it typically has no symptoms until significant damage to the heart or blood vessels occurs."},{"1":"mistral:7b","2":"assistant","3":"Hypertension, often referred to as high blood pressure, is a long-term medical condition in which the blood pressure in the arteries is persistently elevated. Normal blood pressure is typically within the range of 90/60 mmHg to 120/80 mmHg. Hypertension is usually defined as blood pressure consistently above 130/80 mmHg.\\n\\nHypertension increases the workload on the heart and arteries, which can lead to various health problems such as heart disease, stroke, kidney disease, and vision loss, among others. The exact cause of hypertension is often unknown but can be influenced by factors like diet, physical inactivity, obesity, alcohol consumption, tobacco use, stress, age, family history, and certain chronic conditions like diabetes and kidney disease.\\n\\nHypertension typically has no symptoms, making it sometimes referred to as a \"silent killer.\" Regular check-ups, maintaining a healthy lifestyle, and monitoring blood pressure are essential for its prevention and management. Treatment may involve medications, dietary modifications, exercise, stress management, and other lifestyle changes."}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -798,9 +805,9 @@ easy data exploration and visualization using gwalkr package in r|january 18, 20
 <p>Here, we saved the output as <code>data.frame</code>, which can be easily accessed later. We also included <code>model_params = list(seed = 123)</code> to get consistently generated texts for the query. You can set the seed for the whole R session by using <code>options(rollama_seed = 123)</code> function, which can be placed right after <code><a href="https://jbgruber.github.io/rollama/">library(rollama)</a></code>.</p>
 <p>The responses for the query are displayed in <a href="#tbl-multi-llm" class="quarto-xref">Table&nbsp;<span>3.1</span></a>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">q_response</span>, format <span class="op">=</span> <span class="st">"html"</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">q_response</span>, format <span class="op">=</span> <span class="st">"html"</span>,</span>
 <span>             caption <span class="op">=</span> <span class="st">'Query - "Provide a brief description of hypertension."'</span>,</span>
-<span>             col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Model"</span>, <span class="st">"Role"</span>, <span class="st">"Response"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>             col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Model"</span>, <span class="st">"Role"</span>, <span class="st">"Response"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div id="tbl-multi-llm" class="cell quarto-float quarto-figure quarto-figure-center anchored">
@@ -808,7 +815,7 @@ easy data exploration and visualization using gwalkr package in r|january 18, 20
 Table&nbsp;3.1: Query - "Provide a brief description of hypertension."
 </figcaption><div aria-describedby="tbl-multi-llm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead><tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Model</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">Role</th>
@@ -818,22 +825,22 @@ Table&nbsp;3.1: Query - "Provide a brief description of hypertension."
 <tr class="odd">
 <td style="text-align: left;">llama3.2:3b</td>
 <td style="text-align: left;">assistant</td>
-<td style="text-align: left;">Hypertension, also known as high blood pressure, is a medical condition in which the force of blood against the artery walls is consistently too high. It can lead to damage and strain on the heart, kidneys, brain, and other vital organs.\n\nNormally, when the heart beats, it pumps blood into the arteries, causing them to constrict (or narrow) slightly. As the heart relaxes, the arteries dilate (or widen), allowing fresh blood to flow in. In people with hypertension, this process is disrupted, leading to:\n\n1. Arteries that remain permanently narrowed or constricted.\n2. Blood vessels that are stiff and less able to stretch.\n\nHigh blood pressure increases the risk of various health problems, including heart attack, stroke, kidney disease, and vision loss. It can also lead to organ damage over time if left untreated.\n\nHypertension is often asymptomatic, making it crucial for people with high blood pressure to monitor their condition regularly through regular check-ups and at-home blood pressure monitoring.</td>
+<td style="text-align: left;">Hypertension, also known as high blood pressure, is a medical condition in which the force of blood against the walls of the arteries is consistently too high. It can lead to damage to the cardiovascular system, including the heart, kidneys, and blood vessels.\n\nIn healthy individuals, blood pressure varies throughout the day, with a normal reading typically ranging from 90/60 mmHg to 120/80 mmHg. In people with hypertension, their blood pressure remains elevated, often above 140/90 mmHg or 180/120 mmHg in severe cases.\n\nHigh blood pressure is a major risk factor for various health problems, including:\n\n1. Heart attack and stroke\n2. Kidney disease and failure\n3. Vision loss and blindness\n4. Peripheral artery disease\n\nUntreated hypertension can lead to long-term damage and even death. Managing blood pressure through lifestyle changes, such as diet, exercise, and stress reduction, or medication can help prevent these complications.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">gemma2:2b</td>
 <td style="text-align: left;">assistant</td>
-<td style="text-align: left;">Hypertension, also known as high blood pressure, is a condition where the force of your blood against your artery walls is consistently too high. \n\n**Here's a simplified breakdown:**\n\n* **High Blood Pressure (BP):** Imagine a hose with water flowing through it. In hypertensive people, the water pressure in the hose (blood) is too high, causing strain on the walls and potentially leading to problems. \n* **Causes:** Many factors contribute to hypertension, including genetics, lifestyle choices (diet, exercise), stress, and underlying medical conditions like diabetes or kidney disease.\n* **Consequences:** Uncontrolled hypertension damages blood vessels over time, increasing risk of heart attack, stroke, vision loss, and other serious health problems. \n\n**It's important to note that:** Hypertension can be silent in early stages, so regular checkups are crucial. \n\n\nIf you have concerns about your blood pressure, please consult a healthcare professional for accurate diagnosis and guidance.\n</td>
+<td style="text-align: left;">Hypertension, also known as high blood pressure, is a condition where the force of your blood against your artery walls is consistently too high. \n\n**Here's a simplified breakdown:**\n\n* **Normal Blood Pressure:** Less than 120/80 mmHg (systolic/diastolic)\n* **Hypertension:** Systolic above 140 mmHg or diastolic above 90 mmHg\n* **Causes:** Genetics, unhealthy lifestyle choices (diet, exercise, smoking), stress, and underlying medical conditions.\n\n**Consequences of untreated hypertension can lead to serious health problems such as:**\n\n* Heart attack\n* Stroke\n* Kidney failure\n* Vision loss\n* Aortic aneurysms \n\n\nIt's important to monitor your blood pressure regularly and speak with a healthcare professional if you have concerns. \n</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">phi3:3.8b</td>
 <td style="text-align: left;">assistant</td>
-<td style="text-align: left;">Hypertension, also known as high blood pressure, is a common condition in which the force against your artery walls is consistently too high. This can lead to health problems such as heart disease and stroke if not managed properly. There are two types: primary (essential) hypertension, often caused by factors like genetics or lifestyle; and secondary hypertension due to an underlying condition that affects the kidneys, arteries, heart, or endocrine system. It is typically asymptomatic but can be detected through routine screening.</td>
+<td style="text-align: left;">Hypertension, also known as high blood pressure, is a common condition in which the force of the blood against artery walls is consistently too high. This can lead to health problems such as heart disease and stroke if not managed properly. Factors contributing to hypertension include genetics, unhealthy lifestyle habits (such as poor diet, lack of exercise, excessive alcohol consumption), stress, and underlying conditions like kidney diseases or hormonal disorders. It's often called the "silent killer" because it typically has no symptoms until significant damage to the heart or blood vessels occurs.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">mistral:7b</td>
 <td style="text-align: left;">assistant</td>
-<td style="text-align: left;">Hypertension, also known as high blood pressure, is a long-term medical condition in which the force of blood against the walls of arteries is consistently too high. This pressure causes the heart to work harder than normal to pump blood throughout the body, potentially leading to health problems such as heart disease, stroke, kidney failure, and other complications if left untreated. Hypertension is typically categorized as either primary (essential) hypertension or secondary hypertension, with primary being more common and having no identifiable underlying cause, while secondary hypertension is caused by an underlying condition such as kidney problems, tumors, or certain medications.</td>
+<td style="text-align: left;">Hypertension, often referred to as high blood pressure, is a long-term medical condition in which the blood pressure in the arteries is persistently elevated. Normal blood pressure is typically within the range of 90/60 mmHg to 120/80 mmHg. Hypertension is usually defined as blood pressure consistently above 130/80 mmHg.\n\nHypertension increases the workload on the heart and arteries, which can lead to various health problems such as heart disease, stroke, kidney disease, and vision loss, among others. The exact cause of hypertension is often unknown but can be influenced by factors like diet, physical inactivity, obesity, alcohol consumption, tobacco use, stress, age, family history, and certain chronic conditions like diabetes and kidney disease.\n\nHypertension typically has no symptoms, making it sometimes referred to as a "silent killer." Regular check-ups, maintaining a healthy lifestyle, and monitoring blood pressure are essential for its prevention and management. Treatment may involve medications, dietary modifications, exercise, stress management, and other lifestyle changes.</td>
 </tr>
 </tbody>
 </table>
@@ -844,21 +851,28 @@ Table&nbsp;3.1: Query - "Provide a brief description of hypertension."
 </div>
 <p>and you can get well-formatted text if it is processed as Markdown,</p>
 <div class="cell">
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="va">q_response</span><span class="op">$</span><span class="va">response</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="va">q_response</span><span class="op">$</span><span class="va">response</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <blockquote class="gen2markdown blockquote">
 <p>Hypertension, also known as high blood pressure, is a condition where the force of your blood against your artery walls is consistently too high.</p>
 <p><strong>Here’s a simplified breakdown:</strong></p>
 <ul>
 <li>
-<strong>High Blood Pressure (BP):</strong> Imagine a hose with water flowing through it. In hypertensive people, the water pressure in the hose (blood) is too high, causing strain on the walls and potentially leading to problems.</li>
+<strong>Normal Blood Pressure:</strong> Less than 120/80 mmHg (systolic/diastolic)</li>
 <li>
-<strong>Causes:</strong> Many factors contribute to hypertension, including genetics, lifestyle choices (diet, exercise), stress, and underlying medical conditions like diabetes or kidney disease.</li>
+<strong>Hypertension:</strong> Systolic above 140 mmHg or diastolic above 90 mmHg</li>
 <li>
-<strong>Consequences:</strong> Uncontrolled hypertension damages blood vessels over time, increasing risk of heart attack, stroke, vision loss, and other serious health problems.</li>
+<strong>Causes:</strong> Genetics, unhealthy lifestyle choices (diet, exercise, smoking), stress, and underlying medical conditions.</li>
 </ul>
-<p><strong>It’s important to note that:</strong> Hypertension can be silent in early stages, so regular checkups are crucial.</p>
-If you have concerns about your blood pressure, please consult a healthcare professional for accurate diagnosis and guidance.
+<p><strong>Consequences of untreated hypertension can lead to serious health problems such as:</strong></p>
+<ul>
+<li>Heart attack</li>
+<li>Stroke</li>
+<li>Kidney failure</li>
+<li>Vision loss</li>
+<li>Aortic aneurysms</li>
+</ul>
+It’s important to monitor your blood pressure regularly and speak with a healthcare professional if you have concerns.
 </blockquote>
 </section><section id="deep-dive-how-it-works" class="level2" data-number="3.10"><h2 data-number="3.10" class="anchored" data-anchor-id="deep-dive-how-it-works">
 <span class="header-section-number">3.10</span> Deep-dive: How It Works</h2>
@@ -883,7 +897,7 @@ Gruber, J. B., &amp; Weber, M. (2025). <em>Rollama: Communicate with ollama to r
 Lin, H., &amp; Safi, T. (2025). <em>Ollamar: Ollama language models</em>. Retrieved from <a href="https://hauselin.github.io/ollama-r/">https://hauselin.github.io/ollama-r/</a>
 </div>
 <div id="ref-R-mall" class="csl-entry" role="listitem">
-Ruiz, E. (2024). <em>Mall: Run multiple large language model predictions against a table, or vectors</em>. Retrieved from <a href="https://mlverse.github.io/mall/">https://mlverse.github.io/mall/</a>
+Ruiz, E. (2025). <em>Mall: Run multiple large language model predictions against a table, or vectors</em>. Retrieved from <a href="https://mlverse.github.io/mall/">https://mlverse.github.io/mall/</a>
 </div>
 </div>
 </section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
@@ -891,236 +905,243 @@ Ruiz, E. (2024). <em>Mall: Run multiple large language model predictions against
 <li id="fn1"><p><code>mall</code> relies on <code>ollamar</code> <span class="citation" data-cites="R-ollamar">(<a href="#ref-R-ollamar" role="doc-biblioref">Lin &amp; Safi, 2025</a>)</span>. You can see detailed <code>ollamar</code> code by including <code>preview = TRUE</code> option to <code>mall</code>’s functions.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Hint: You can see how <code><a href="https://rdrr.io/pkg/mall/man/llm_translate.html">llm_translate()</a></code> does it by including <code>preview = TRUE</code> option.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
       }
+      return false;
     }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
       }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
         }
       }
       return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/wnarifin\.github\.io\/explore_llm_r\/");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/wnarifin\.github\.io\/explore_llm_r\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
         }
-        return container.innerHTML
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -1128,185 +1149,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./ch2.html" class="pagination-link" aria-label="Local Large Language Models">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Local Large Language Models</span></span>
       </a>          

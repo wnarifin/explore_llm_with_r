@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
-
+<meta name="generator" content="quarto-1.8.25">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
-<title>6&nbsp; Text Classification – Exploring Large Language Models With R</title>
+<title>6&nbsp; Text and Image Classification – Exploring Large Language Models With R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,8 +17,42 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
-
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
@@ -32,16 +63,17 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="./">
 <link href="./ch7.html" rel="next">
 <link href="./ch5.html" rel="prev">
-<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-97a305611cbfd25bbccc16d93f2db226.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-da7ceb9a644d987a66da8b2b9333945a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -67,34 +99,28 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-
-
+}</script><link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 </head>
-
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch6.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Text Classification</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch6.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Text and Image Classification</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Exploring Large Language Models With R</a> 
     </div>
@@ -106,7 +132,7 @@ ul.task-list li input[type="checkbox"] {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
@@ -145,7 +171,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch6.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Text Classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Text and Image Classification</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -157,13 +183,13 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch8.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Fine-tuning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Tool Calling and Agents</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch9.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Miscellaneous Techniques</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Fine-tuning</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -179,25 +205,35 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
     </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#deep-dive-how-it-works" id="toc-deep-dive-how-it-works" class="nav-link active" data-scroll-target="#deep-dive-how-it-works"><span class="header-section-number">6.1</span> Deep-dive: How it works</a></li>
+<li><a href="#preliminaries" id="toc-preliminaries" class="nav-link active" data-scroll-target="#preliminaries"><span class="header-section-number">6.1</span> Preliminaries</a></li>
+  <li>
+<a href="#text-classification" id="toc-text-classification" class="nav-link" data-scroll-target="#text-classification"><span class="header-section-number">6.2</span> Text classification</a>
+  <ul class="collapse">
+<li><a href="#using-llms" id="toc-using-llms" class="nav-link" data-scroll-target="#using-llms"><span class="header-section-number">6.2.1</span> Using LLMs</a></li>
+  <li><a href="#using-embeddings-with-neural-networks" id="toc-using-embeddings-with-neural-networks" class="nav-link" data-scroll-target="#using-embeddings-with-neural-networks"><span class="header-section-number">6.2.2</span> Using embeddings with neural networks</a></li>
   </ul>
-</nav>
+</li>
+  <li>
+<a href="#image-classification-using-llms" id="toc-image-classification-using-llms" class="nav-link" data-scroll-target="#image-classification-using-llms"><span class="header-section-number">6.3</span> Image classification using LLMs</a>
+  <ul class="collapse">
+<li><a href="#first-test-one-image-for-all-selected-models" id="toc-first-test-one-image-for-all-selected-models" class="nav-link" data-scroll-target="#first-test-one-image-for-all-selected-models"><span class="header-section-number">6.3.1</span> First test: One image for all selected models</a></li>
+  <li><a href="#second-test-five-random-images-for-all-selected-models" id="toc-second-test-five-random-images-for-all-selected-models" class="nav-link" data-scroll-target="#second-test-five-random-images-for-all-selected-models"><span class="header-section-number">6.3.2</span> Second test: Five random images for all selected models</a></li>
+  <li><a href="#third-test-many-more-images-for-a-selected-model" id="toc-third-test-many-more-images-for-a-selected-model" class="nav-link" data-scroll-target="#third-test-many-more-images-for-a-selected-model"><span class="header-section-number">6.3.3</span> Third test: Many more images for a selected model</a></li>
+  </ul>
+</li>
+  <li><a href="#deep-dive-how-it-works" id="toc-deep-dive-how-it-works" class="nav-link" data-scroll-target="#deep-dive-how-it-works"><span class="header-section-number">6.4</span> Deep-dive: How it works</a></li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title"><span id="sec-classification" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Text Classification</span></span></h1>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title"><span id="sec-classification" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Text and Image Classification</span></span></h1>
 </div>
 
 
@@ -211,252 +247,553 @@ ul.task-list li input[type="checkbox"] {
   
 
 
-</header>
+</header><section id="preliminaries" class="level2" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="preliminaries">
+<span class="header-section-number">6.1</span> Preliminaries</h2>
+<p>Load these packages,</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://jbgruber.github.io/rollama/">rollama</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/">purrr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/">tibble</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Also install and load the following packages for confusion matrix analysis,</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/">caret</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ludvigolsen/cvms">cvms</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Make sure that your Ollama is running,</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://jbgruber.github.io/rollama/reference/ping_ollama.html">ping_ollama</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># ensure it's running</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>▶ Ollama (v0.15.1) is running at &lt;http://localhost:11434&gt;!</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># list_models()$name #&gt; run this to view available models in your system</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>For consistent responses from LLM, we may set rollama options,</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>rollama_seed <span class="op">=</span> <span class="fl">12345</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This is more convenient than using <code>model_params = list(seed = 123)</code> in <code><a href="https://jbgruber.github.io/rollama/reference/query.html">query()</a></code> function.</p>
+</section><section id="text-classification" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="text-classification">
+<span class="header-section-number">6.2</span> Text classification</h2>
+<section id="using-llms" class="level3" data-number="6.2.1"><h3 data-number="6.2.1" class="anchored" data-anchor-id="using-llms">
+<span class="header-section-number">6.2.1</span> Using LLMs</h3>
+<p>In progress …</p>
+</section><section id="using-embeddings-with-neural-networks" class="level3" data-number="6.2.2"><h3 data-number="6.2.2" class="anchored" data-anchor-id="using-embeddings-with-neural-networks">
+<span class="header-section-number">6.2.2</span> Using embeddings with neural networks</h3>
+<p>In progress …</p>
+</section></section><section id="image-classification-using-llms" class="level2" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="image-classification-using-llms">
+<span class="header-section-number">6.3</span> Image classification using LLMs</h2>
+<p>I relied on animal images and adapted the Python code from this nice Github <a href="https://github.com/robert-mcdermott/LLM-Image-Classification" class="uri">https://github.com/robert-mcdermott/LLM-Image-Classification</a> to demonstrate image classification using LLMs of our choice. Let’s get started. Don’t forget to refer to previous chapter <a href="ch4.html" class="quarto-xref"><span>Chapter 4</span></a>.</p>
+<p>The following are our new friends,</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">vision_model0</span> <span class="op">=</span> <span class="st">"gemma3:12b"</span></span>
+<span><span class="va">vision_model1</span> <span class="op">=</span> <span class="st">"ministral-3:14b"</span></span>
+<span><span class="va">vision_model2</span> <span class="op">=</span> <span class="st">"qwen3-vl:8b"</span></span>
+<span><span class="va">vision_models</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">vision_model0</span>, <span class="va">vision_model1</span>, <span class="va">vision_model2</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Also install and load the following packages form image analysis,</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://asgr.github.io/imager/">imager</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="first-test-one-image-for-all-selected-models" class="level3" data-number="6.3.1"><h3 data-number="6.3.1" class="anchored" data-anchor-id="first-test-one-image-for-all-selected-models">
+<span class="header-section-number">6.3.1</span> First test: One image for all selected models</h3>
+<p>Let’s test these models with one image first to know whether out prompt works. Make sure you already downloaded animal images from <a href="https://github.com/robert-mcdermott/LLM-Image-Classification/blob/26abb58a576256887b77ff8914457e6f00e2121d/image_data/animals-test.zip" class="uri">https://github.com/robert-mcdermott/LLM-Image-Classification/blob/26abb58a576256887b77ff8914457e6f00e2121d/image_data/animals-test.zip</a>. The image name below is one of the 500 images available in the zip file.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dir</span> <span class="op">=</span> <span class="st">"img/animals-test/"</span></span>
+<span><span class="va">img</span> <span class="op">=</span> <span class="st">"cat_10.jpg"</span></span>
+<span><span class="va">img_path</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">dir</span>,<span class="va">img</span><span class="op">)</span></span>
+<span><span class="va">q_text</span> <span class="op">=</span> <span class="st">"Name the animal in image.</span></span>
+<span><span class="st">ONLY response in singular form and in lowercase.</span></span>
+<span><span class="st">Do not elaborate, do not comment."</span></span>
+<span><span class="va">q_response</span> <span class="op">=</span> <span class="fu"><a href="https://jbgruber.github.io/rollama/reference/query.html">query</a></span><span class="op">(</span><span class="va">q_text</span>, <span class="va">vision_models</span>, images <span class="op">=</span> <span class="va">img_path</span>,</span>
+<span>      output <span class="op">=</span> <span class="st">"data.frame"</span>, screen <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">q_response</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["model"],"name":[1],"type":["chr"],"align":["left"]},{"label":["role"],"name":[2],"type":["chr"],"align":["left"]},{"label":["response"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"gemma3:12b","2":"assistant","3":"cat"},{"1":"ministral-3:14b","2":"assistant","3":"cat"},{"1":"qwen3-vl:8b","2":"assistant","3":"cat"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section><section id="second-test-five-random-images-for-all-selected-models" class="level3" data-number="6.3.2"><h3 data-number="6.3.2" class="anchored" data-anchor-id="second-test-five-random-images-for-all-selected-models">
+<span class="header-section-number">6.3.2</span> Second test: Five random images for all selected models</h3>
+<p>Let’s now try these with 5 random images in the directory,</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Names of all images in directory</span></span>
+<span><span class="va">imgs</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="va">dir</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># sample of n = 5 images</span></span>
+<span><span class="va">size</span> <span class="op">=</span> <span class="fl">5</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">img_samples</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">imgs</span>, size <span class="op">=</span> <span class="va">size</span><span class="op">)</span></span>
+<span><span class="va">img_sample_paths</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">dir</span>, <span class="va">img_samples</span><span class="op">)</span> <span class="co"># same dir as above</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Then, we run the loop (vectorization in R),</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">q_response_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">img_sample_paths</span>, <span class="kw">function</span><span class="op">(</span><span class="va">img_path</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://jbgruber.github.io/rollama/reference/query.html">query</a></span><span class="op">(</span></span>
+<span>    q <span class="op">=</span> <span class="va">q_text</span>,</span>
+<span>    model <span class="op">=</span> <span class="va">vision_models</span>,</span>
+<span>    images <span class="op">=</span> <span class="va">img_path</span>,</span>
+<span>    output <span class="op">=</span> <span class="st">"data.frame"</span>,</span>
+<span>    screen <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Combine all list objects into one object,</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">q_response_tbl</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">q_response_list</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Add true labels and image file names so you know which row is which,</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">q_response_tbl</span><span class="op">$</span><span class="va">true_label</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">sub</a></span><span class="op">(</span><span class="st">"_.*"</span>, <span class="st">""</span>, <span class="va">img_samples</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span>each<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">vision_models</span><span class="op">)</span><span class="op">)</span> <span class="co"># replicate the labels according to number of models</span></span>
+<span><span class="va">q_response_tbl</span><span class="op">$</span><span class="va">image_name</span> <span class="op">=</span> <span class="va">img_samples</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span>each<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">vision_models</span><span class="op">)</span><span class="op">)</span> <span class="co"># replicate the paths</span></span>
+<span><span class="va">q_response_tbl</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["model"],"name":[1],"type":["chr"],"align":["left"]},{"label":["role"],"name":[2],"type":["chr"],"align":["left"]},{"label":["response"],"name":[3],"type":["chr"],"align":["left"]},{"label":["true_label"],"name":[4],"type":["chr"],"align":["left"]},{"label":["image_name"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"gemma3:12b","2":"assistant","3":"spider","4":"spider","5":"spider_OIP-7kN3Ns5pFU_pb0OoutFnCgHaFe.jpg"},{"1":"ministral-3:14b","2":"assistant","3":"harvestman","4":"spider","5":"spider_OIP-7kN3Ns5pFU_pb0OoutFnCgHaFe.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"spider","4":"spider","5":"spider_OIP-7kN3Ns5pFU_pb0OoutFnCgHaFe.jpg"},{"1":"gemma3:12b","2":"assistant","3":"squirrel","4":"squirrel","5":"squirrel_OIP-db7e2PXu7ggJqqPyxqfpAwHaGF.jpg"},{"1":"ministral-3:14b","2":"assistant","3":"squirrel","4":"squirrel","5":"squirrel_OIP-db7e2PXu7ggJqqPyxqfpAwHaGF.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"squirrel","4":"squirrel","5":"squirrel_OIP-db7e2PXu7ggJqqPyxqfpAwHaGF.jpg"},{"1":"gemma3:12b","2":"assistant","3":"cow","4":"cow","5":"cow_OIP-jlMughh2HIn8LDBjyfX8bgHaEK.jpg"},{"1":"ministral-3:14b","2":"assistant","3":"cow","4":"cow","5":"cow_OIP-jlMughh2HIn8LDBjyfX8bgHaEK.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"cow","4":"cow","5":"cow_OIP-jlMughh2HIn8LDBjyfX8bgHaEK.jpg"},{"1":"gemma3:12b","2":"assistant","3":"butterfly","4":"butterfly","5":"butterfly_OIP-9RgfkrYa3kKBxftrUsLT7gHaD1.jpg"},{"1":"ministral-3:14b","2":"assistant","3":"butterfly","4":"butterfly","5":"butterfly_OIP-9RgfkrYa3kKBxftrUsLT7gHaD1.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"butterfly","4":"butterfly","5":"butterfly_OIP-9RgfkrYa3kKBxftrUsLT7gHaD1.jpg"},{"1":"gemma3:12b","2":"assistant","3":"cow","4":"cow","5":"cow_OIP-VrTSdkYTTlwIyGLupsL4zgHaFJ.jpg"},{"1":"ministral-3:14b","2":"assistant","3":"cow","4":"cow","5":"cow_OIP-VrTSdkYTTlwIyGLupsL4zgHaFJ.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"cow","4":"cow","5":"cow_OIP-VrTSdkYTTlwIyGLupsL4zgHaFJ.jpg"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Looks like a super perfect result for classification.</p>
+</section><section id="third-test-many-more-images-for-a-selected-model" class="level3" data-number="6.3.3"><h3 data-number="6.3.3" class="anchored" data-anchor-id="third-test-many-more-images-for-a-selected-model">
+<span class="header-section-number">6.3.3</span> Third test: Many more images for a selected model</h3>
+<p>Let’s now try on larger sample for e.g.&nbsp;<em>n</em> = 50 for one model. Sample the images,</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">size</span> <span class="op">=</span> <span class="fl">50</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">img_samples</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">imgs</span>, size <span class="op">=</span> <span class="va">size</span><span class="op">)</span></span>
+<span><span class="va">img_sample_paths</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">dir</span>, <span class="va">img_samples</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>For this purpose, we update our prompt a bit to be more specific, where the options must be only among the available labels. We prepare the available labels first,</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># keep labels as file names before "_"</span></span>
+<span><span class="va">available_names</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">sub</a></span><span class="op">(</span><span class="st">"_.*"</span>, <span class="st">""</span>, <span class="va">imgs</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span>collapse <span class="op">=</span> <span class="st">", "</span><span class="op">)</span></span>
+<span><span class="va">available_names</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "butterfly, cat, chicken, cow, dog, elephant, horse, sheep, spider, squirrel"</code></pre>
+</div>
+</div>
+<p>We update the prompt,</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">q_text</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Name the animal in image, ONLY choose among the following names: "</span>,</span>
+<span>                <span class="va">available_names</span>, <span class="co"># update to choose only from specific animal names</span></span>
+<span>                <span class="st">". If animal name is not included among the listed names, response: unidentified"</span>,</span>
+<span>                <span class="st">". ONLY response in singular form and in lowercase. Do not elaborate, do not comment."</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Then, we run the loop,</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">q_response_list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">img_sample_paths</span>, <span class="kw">function</span><span class="op">(</span><span class="va">img_path</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://jbgruber.github.io/rollama/reference/query.html">query</a></span><span class="op">(</span></span>
+<span>    q <span class="op">=</span> <span class="va">q_text</span>,</span>
+<span>    model <span class="op">=</span> <span class="va">vision_model2</span>,</span>
+<span>    images <span class="op">=</span> <span class="va">img_path</span>,</span>
+<span>    output <span class="op">=</span> <span class="st">"data.frame"</span>,</span>
+<span>    screen <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>using the smallest model of the three, qwen3-vl:8b.</p>
+<p>Combine the list,</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">q_response_tbl</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">q_response_list</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Add true labels and image file names,</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">q_response_tbl</span><span class="op">$</span><span class="va">true_label</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">sub</a></span><span class="op">(</span><span class="st">"_.*"</span>, <span class="st">""</span>, <span class="va">img_samples</span><span class="op">)</span></span>
+<span><span class="va">q_response_tbl</span><span class="op">$</span><span class="va">image_name</span> <span class="op">=</span> <span class="va">img_samples</span></span>
+<span><span class="va">q_response_tbl</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["model"],"name":[1],"type":["chr"],"align":["left"]},{"label":["role"],"name":[2],"type":["chr"],"align":["left"]},{"label":["response"],"name":[3],"type":["chr"],"align":["left"]},{"label":["true_label"],"name":[4],"type":["chr"],"align":["left"]},{"label":["image_name"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"qwen3-vl:8b","2":"assistant","3":"spider","4":"spider","5":"spider_OIP-7kN3Ns5pFU_pb0OoutFnCgHaFe.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"squirrel","4":"squirrel","5":"squirrel_OIP-db7e2PXu7ggJqqPyxqfpAwHaGF.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"cow","4":"cow","5":"cow_OIP-jlMughh2HIn8LDBjyfX8bgHaEK.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"butterfly","4":"butterfly","5":"butterfly_OIP-9RgfkrYa3kKBxftrUsLT7gHaD1.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"cow","4":"cow","5":"cow_OIP-VrTSdkYTTlwIyGLupsL4zgHaFJ.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"spider","4":"spider","5":"spider_OIP-dXtHeHKIJEuEzTOGnIRQugHaIO.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"horse","4":"horse","5":"horse_OIP-5w4861bwgkhhIXFkHjavngAAAA.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"chicken","4":"chicken","5":"chicken_OIP-baEUeCGLa1AOlZjTCWl2zgHaHV.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"elephant","4":"elephant","5":"elephant_OIP-zjO3Dp6jg-zilWTaQ184UgAAAA.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"dog","4":"dog","5":"dog_OIP-Kxp8-8QMa_qVoCy1OUUH4QHaJ6.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"dog","4":"dog","5":"dog_OIP-XHaJ-fYO1esI_8bGXM4lgwHaH6.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"squirrel","4":"squirrel","5":"squirrel_OIP-zpD7SDCbIqwjYm2A06OybwHaID.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"sheep","4":"sheep","5":"sheep_OIP-3Lldmuln2eWljKMCyh3cZQHaGm.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"cow","4":"cow","5":"cow_OIP-2m0N5Sp1KaHVJfrCr5RrRAHaFc.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"cat","4":"cat","5":"cat_ea35b0082df7033ed1584d05fb1d4e9fe777ead218ac104497f5c978a7ebb0bb_640.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"cat","4":"cat","5":"cat_ea35b70721f4023ed1584d05fb1d4e9fe777ead218ac104497f5c978a7ebb0bb_640.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"elephant","4":"elephant","5":"elephant_ea34b6082af0083ed1584d05fb1d4e9fe777ead218ac104497f5c978a4efb4bb_640.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"cow","4":"cow","5":"cow_OIP-XxnH8yNUzDlat7kfdxCcJwAAAA.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"squirrel","4":"squirrel","5":"squirrel_OIP-qnT14Do5nVYI0jFDrmzTPAHaGb.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"spider","4":"spider","5":"spider_OIP-SoJdd7qo7w1cP8m33fjKlQHaFj.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"horse","4":"horse","5":"horse_OIP-zpc5VOUXIhtEaSHp9AA1WwHaHh.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"chicken","4":"chicken","5":"chicken_OIP-QvhpBc8aDmocG5LSaZGhyQHaF7.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"squirrel","4":"squirrel","5":"squirrel_OIP-jX5AIOQIHPTZSHPM5H2_jAHaFj.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"sheep","4":"sheep","5":"sheep_ea36b20e2efc083ed1584d05fb1d4e9fe777ead218ac104497f5c978a6e8b0b1_640.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"horse","4":"horse","5":"horse_OIP-nJOUUe0TgOdMGNEWrTte2QHaFj.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"butterfly","4":"butterfly","5":"butterfly_OIP-JQidmdrybKE_dMlvWTYFQQHaFY.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"butterfly","4":"butterfly","5":"butterfly_eb3db2082dfc083ed1584d05fb1d4e9fe777ead218ac104497f5c97faee9bdba_640.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"squirrel","4":"squirrel","5":"squirrel_OIP-zhLz2NNZOh527Bvrz2dlpAHaFw.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"squirrel","4":"squirrel","5":"squirrel_OIP-Nd0PE1oo_apToADZMRu35AHaFj.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"elephant","4":"elephant","5":"elephant_ea34b0062cf4093ed1584d05fb1d4e9fe777ead218ac104497f5c978a4efbcb0_640.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"dog","4":"dog","5":"dog_OIP-Ab97v-nnhG6AXLw1cAMgkQHaHa.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"spider","4":"spider","5":"spider_OIP-CP9VIEF5lYfJ1KWdo99WzwHaFY.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"cat","4":"cat","5":"cat_332.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"cat","4":"cat","5":"cat_51.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"butterfly","4":"butterfly","5":"butterfly_OIP-u2i0X4o7rtrbRPOyr0NfUAHaFj.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"sheep","4":"sheep","5":"sheep_eb32b30d2ef0093ed1584d05fb1d4e9fe777ead218ac104497f5c978a6ebb3bf_640.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"sheep","4":"sheep","5":"sheep_OIP-1HdVVrgQHvdnTT7qTp5ALAHaGY.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"horse","4":"horse","5":"horse_OIP-PHavgaYnfvIMwgOhudwrjAHaFD.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"chicken","4":"chicken","5":"chicken_OIP-TNyNFQJ8ZmjkFzF4SvfCXAHaHa.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"butterfly","4":"butterfly","5":"butterfly_OIP-nWBRAssnquFV5uMvAWyEKQHaFj.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"chicken","4":"chicken","5":"chicken_OIP-_QSU2bYtEyAz4YP9DOED6gHaE7.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"elephant","4":"elephant","5":"elephant_eb37b40b2ef6063ed1584d05fb1d4e9fe777ead218ac104497f5c978a4efbcb0_640.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"sheep","4":"sheep","5":"sheep_OIP-M2CEJMC2BQvgH4ahk4r82AAAAA.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"spider","4":"spider","5":"spider_OIP-dOStyaW3MaNtms_uVbnXWQHaFj.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"horse","4":"horse","5":"horse_OIP-OADVufz8itVGBtFZ8_pF6gHaFx.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"unidentified","4":"butterfly","5":"butterfly_OIP-IBqr8QOOid0xr88Dsg9-ywHaFj.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"spider","4":"spider","5":"spider_OIP-1nof0WfAuHzTHOVkZeKXmQHaF2.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"spider","4":"spider","5":"spider_OIP-W8Oju7HERJ7PngZ43whEXwHaIy.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"horse","4":"horse","5":"horse_OIP-9sFa3csY9lIyZNbRv1DIXgAAAA.jpg"},{"1":"qwen3-vl:8b","2":"assistant","3":"chicken","4":"chicken","5":"chicken_OIP-qLmPqVOUQyMtTZiVkFFWEwHaFj.jpg"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>We check the performance metrics using confusion matrix,</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># turn string to factor (for caret)</span></span>
+<span><span class="va">all_levels</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">q_response_tbl</span><span class="op">$</span><span class="va">true_label</span>, <span class="va">q_response_tbl</span><span class="op">$</span><span class="va">response</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">actual</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">q_response_tbl</span><span class="op">$</span><span class="va">true_label</span>, levels <span class="op">=</span> <span class="va">all_levels</span><span class="op">)</span></span>
+<span><span class="va">predicted</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">q_response_tbl</span><span class="op">$</span><span class="va">response</span>, levels <span class="op">=</span> <span class="va">all_levels</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># show the metrics</span></span>
+<span><span class="va">cm</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/confusionMatrix.html">confusionMatrix</a></span><span class="op">(</span><span class="va">predicted</span>, <span class="va">actual</span>, mode <span class="op">=</span> <span class="st">"everything"</span><span class="op">)</span></span>
+<span><span class="va">cm</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Confusion Matrix and Statistics
 
+              Reference
+Prediction     spider squirrel cow butterfly horse chicken elephant dog sheep
+  spider            7        0   0         0     0       0        0   0     0
+  squirrel          0        6   0         0     0       0        0   0     0
+  cow               0        0   4         0     0       0        0   0     0
+  butterfly         0        0   0         5     0       0        0   0     0
+  horse             0        0   0         0     6       0        0   0     0
+  chicken           0        0   0         0     0       5        0   0     0
+  elephant          0        0   0         0     0       0        4   0     0
+  dog               0        0   0         0     0       0        0   3     0
+  sheep             0        0   0         0     0       0        0   0     5
+  cat               0        0   0         0     0       0        0   0     0
+  unidentified      0        0   0         1     0       0        0   0     0
+              Reference
+Prediction     cat unidentified
+  spider         0            0
+  squirrel       0            0
+  cow            0            0
+  butterfly      0            0
+  horse          0            0
+  chicken        0            0
+  elephant       0            0
+  dog            0            0
+  sheep          0            0
+  cat            4            0
+  unidentified   0            0
 
-<ul>
-<li>From LLMs – using rollama, mall, zero-multiple shots</li>
-<li>From embeddings – embedding + class -&gt; NN -&gt; predict class</li>
-</ul>
-<section id="deep-dive-how-it-works" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="deep-dive-how-it-works"><span class="header-section-number">6.1</span> Deep-dive: How it works</h2>
+Overall Statistics
+                                          
+               Accuracy : 0.98            
+                 95% CI : (0.8935, 0.9995)
+    No Information Rate : 0.14            
+    P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+                                          
+                  Kappa : 0.9777          
+                                          
+ Mcnemar's Test P-Value : NA              
+
+Statistics by Class:
+
+                     Class: spider Class: squirrel Class: cow Class: butterfly
+Sensitivity                   1.00            1.00       1.00           0.8333
+Specificity                   1.00            1.00       1.00           1.0000
+Pos Pred Value                1.00            1.00       1.00           1.0000
+Neg Pred Value                1.00            1.00       1.00           0.9778
+Precision                     1.00            1.00       1.00           1.0000
+Recall                        1.00            1.00       1.00           0.8333
+F1                            1.00            1.00       1.00           0.9091
+Prevalence                    0.14            0.12       0.08           0.1200
+Detection Rate                0.14            0.12       0.08           0.1000
+Detection Prevalence          0.14            0.12       0.08           0.1000
+Balanced Accuracy             1.00            1.00       1.00           0.9167
+                     Class: horse Class: chicken Class: elephant Class: dog
+Sensitivity                  1.00            1.0            1.00       1.00
+Specificity                  1.00            1.0            1.00       1.00
+Pos Pred Value               1.00            1.0            1.00       1.00
+Neg Pred Value               1.00            1.0            1.00       1.00
+Precision                    1.00            1.0            1.00       1.00
+Recall                       1.00            1.0            1.00       1.00
+F1                           1.00            1.0            1.00       1.00
+Prevalence                   0.12            0.1            0.08       0.06
+Detection Rate               0.12            0.1            0.08       0.06
+Detection Prevalence         0.12            0.1            0.08       0.06
+Balanced Accuracy            1.00            1.0            1.00       1.00
+                     Class: sheep Class: cat Class: unidentified
+Sensitivity                   1.0       1.00                  NA
+Specificity                   1.0       1.00                0.98
+Pos Pred Value                1.0       1.00                  NA
+Neg Pred Value                1.0       1.00                  NA
+Precision                     1.0       1.00                0.00
+Recall                        1.0       1.00                  NA
+F1                            1.0       1.00                  NA
+Prevalence                    0.1       0.08                0.00
+Detection Rate                0.1       0.08                0.00
+Detection Prevalence          0.1       0.08                0.02
+Balanced Accuracy             1.0       1.00                  NA</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cm</span><span class="op">$</span><span class="va">byClass</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Balanced Accuracy"</span>, <span class="st">"Precision"</span>, <span class="st">"Recall"</span>, <span class="st">"F1"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    Balanced Accuracy Precision    Recall        F1
+Class: spider               1.0000000         1 1.0000000 1.0000000
+Class: squirrel             1.0000000         1 1.0000000 1.0000000
+Class: cow                  1.0000000         1 1.0000000 1.0000000
+Class: butterfly            0.9166667         1 0.8333333 0.9090909
+Class: horse                1.0000000         1 1.0000000 1.0000000
+Class: chicken              1.0000000         1 1.0000000 1.0000000
+Class: elephant             1.0000000         1 1.0000000 1.0000000
+Class: dog                  1.0000000         1 1.0000000 1.0000000
+Class: sheep                1.0000000         1 1.0000000 1.0000000
+Class: cat                  1.0000000         1 1.0000000 1.0000000
+Class: unidentified                NA         0        NA        NA</code></pre>
+</div>
+</div>
+<p>and visualize the results,</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ludvigolsen/cvms">cvms</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/YuLab-SMU/ggimage">ggimage</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/cvms/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">q_response_tbl</span>, target_col <span class="op">=</span> <span class="st">"true_label"</span>, prediction_cols <span class="op">=</span> <span class="st">"response"</span>, </span>
+<span>         type <span class="op">=</span> <span class="st">"multinomial"</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="fu"><a href="https://rdrr.io/pkg/cvms/man/plot_confusion_matrix.html">plot_confusion_matrix</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="ch6_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We have one <em>unidentified</em> animal, let’s check,</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">idx</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">q_response_tbl</span><span class="op">$</span><span class="va">response</span> <span class="op">==</span> <span class="st">"unidentified"</span><span class="op">)</span></span>
+<span><span class="va">idx</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 46</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/load.image.html">load.image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">dir</span>, <span class="va">q_response_tbl</span><span class="op">$</span><span class="va">image_name</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>axes <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="ch6_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>What do you think? Is the label correct, or LLM is correct? It seems our buddy is correct (this is not a butterfly, this is a moth).</p>
+<p>You can run the inference on the full <em>n</em> = 500 animal images on your own.</p>
+</section></section><section id="deep-dive-how-it-works" class="level2" data-number="6.4"><h2 data-number="6.4" class="anchored" data-anchor-id="deep-dive-how-it-works">
+<span class="header-section-number">6.4</span> Deep-dive: How it works</h2>
 <p>In progress …</p>
 
 
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
       }
+      return false;
     }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
       }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
         }
       }
       return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/wnarifin\.github\.io\/explore_llm_r\/");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/wnarifin\.github\.io\/explore_llm_r\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
         }
-        return container.innerHTML
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -464,187 +801,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./ch5.html" class="pagination-link" aria-label="Embedding Generation">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Embedding Generation</span></span>
       </a>          
@@ -656,7 +967,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-
 
 
 
